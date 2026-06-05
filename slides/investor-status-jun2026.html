@@ -38,9 +38,10 @@
     .slide {
       position: absolute; inset: 0;
       background: var(--bg);
-      padding: 64px 80px;
+      padding: 56px 72px;
       display: none; flex-direction: column; justify-content: center;
       opacity: 0; transition: opacity 0.4s ease;
+      overflow-y: auto;
     }
     .slide.active { display:flex; opacity:1; }
 
@@ -51,12 +52,12 @@
       background: var(--soft);
       border: 1px solid rgba(124,58,237,0.2);
       padding: 4px 14px; border-radius: 100px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    h1 { font-size: 4rem;   font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); }
-    h2 { font-size: 2.6rem; font-weight: 700; line-height: 1.1;  letter-spacing: -0.025em; color: var(--text); }
-    h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.2;  letter-spacing: -0.02em; color: var(--text); }
+    h1 { font-size: 3.8rem; font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); }
+    h2 { font-size: 2.4rem; font-weight: 700; line-height: 1.1;  letter-spacing: -0.025em; color: var(--text); }
+    h3 { font-size: 1.4rem; font-weight: 700; line-height: 1.2;  letter-spacing: -0.02em; color: var(--text); }
     h4 { font-size: 1rem;   font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
 
     .grad-text {
@@ -65,40 +66,44 @@
       background-clip: text;
     }
 
-    p { font-size: 1rem; color: var(--muted); line-height: 1.65; }
-    .lead { font-size: 1.15rem; color: var(--muted); line-height: 1.6; }
+    p { font-size: 0.98rem; color: var(--muted); line-height: 1.6; }
+    .lead { font-size: 1.1rem; color: var(--muted); line-height: 1.55; }
     .mono { font-family: 'JetBrains Mono', monospace; }
 
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 
     .card {
       background: #fff;
       border: 1.5px solid var(--border);
       border-radius: 16px;
-      padding: 28px 24px;
+      padding: 22px 22px;
     }
     .card.purple { background: var(--soft); border-color: rgba(124,58,237,0.3); }
     .card.dark   { background: var(--text); border-color: var(--text); color:#fff; }
     .card.dark h3, .card.dark h4 { color:#fff; }
     .card.dark p  { color:rgba(255,255,255,0.7); }
+    .card.green  { background: #ECFDF5; border-color: #A7F3D0; }
+    .card.amber  { background: #FFFBEB; border-color: #FDE68A; }
+    .card.cyan   { background: #ECFEFF; border-color: #A5F3FC; }
 
     .card-tag {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.62rem; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--purple);
-      margin-bottom: 12px; display: block;
+      margin-bottom: 10px; display: block;
     }
 
     .stat-val {
-      font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em;
+      font-size: 2.6rem; font-weight: 700; letter-spacing: -0.04em;
       background: var(--grad);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
       line-height: 1; display: block; margin-bottom: 6px;
     }
     .stat-label {
-      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em;
       text-transform: uppercase; color: var(--dim);
     }
 
@@ -106,89 +111,88 @@
       display: flex; gap: 0;
       border: 1.5px solid var(--border);
       border-radius: 16px; overflow: hidden;
-      background: #fff; margin-top: 32px;
+      background: #fff; margin-top: 28px;
     }
-    .big-num { flex:1; padding: 28px; text-align:center; border-right: 1px solid var(--border); }
+    .big-num { flex:1; padding: 24px; text-align:center; border-right: 1px solid var(--border); }
     .big-num:last-child { border-right: none; }
 
     .pill {
-      display: inline-block; font-size: 0.75rem; font-weight: 600;
-      padding: 4px 12px; border-radius: 100px; margin: 3px;
+      display: inline-block; font-size: 0.7rem; font-weight: 600;
+      padding: 3px 10px; border-radius: 100px; margin: 2px;
+      font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;
     }
-    .pill.committed { background: #ECFDF5; color: #059669; border:1px solid #A7F3D0; }
-    .pill.prospect  { background: var(--soft); color: var(--purple); border:1px solid rgba(124,58,237,0.2); }
-    .pill.cold      { background: #F3F4F6; color: var(--muted); border:1px solid var(--border); }
+    .pill.signed    { background: #ECFDF5; color: #059669; border:1px solid #A7F3D0; }
+    .pill.hot       { background: #FEF2F2; color: #DC2626; border:1px solid #FECACA; }
+    .pill.submitted { background: #ECFEFF; color: #0891B2; border:1px solid #A5F3FC; }
+    .pill.active    { background: var(--soft); color: var(--purple); border:1px solid rgba(124,58,237,0.2); }
+    .pill.emerging  { background: #F3F4F6; color: var(--muted); border:1px solid var(--border); }
 
-    /* Pipeline bar */
-    .pipeline-bar {
-      display: flex; height: 64px;
-      border-radius: 12px; overflow: hidden;
+    /* Pipeline stage bar */
+    .stage-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin-top: 8px;
+    }
+    .stage {
+      border-radius: 12px;
+      padding: 18px 18px;
       border: 1.5px solid var(--border);
-      margin-top: 24px;
+      background: #fff;
     }
-    .pipe-seg {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      color: #fff; padding: 0 12px;
-    }
-    .pipe-seg .seg-num { font-weight: 700; font-size: 1.2rem; line-height: 1; }
-    .pipe-seg .seg-lbl { font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px; opacity: 0.9; }
-    .pipe-seg.committed { background: var(--green); }
-    .pipe-seg.prospect  { background: var(--purple); }
-    .pipe-seg.cold      { background: #CBD5E1; color: var(--text); }
-
-    /* Tier table */
-    .tier-table {
-      width: 100%; border-collapse: collapse;
-      border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden;
-      margin-top: 20px;
-    }
-    .tier-table th, .tier-table td {
-      padding: 14px 18px; text-align: left;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-    .tier-table th {
-      background: var(--bg-tint);
-      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--dim); font-weight: 600;
+    .stage.signed    { border-color: #A7F3D0; background: #ECFDF5; }
+    .stage.submitted { border-color: #A5F3FC; background: #ECFEFF; }
+    .stage.active    { border-color: rgba(124,58,237,0.3); background: var(--soft); }
+    .stage.emerging  { border-color: var(--border); background: #FAFAFA; }
+    .stage-label {
       font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px; display:block;
     }
-    .tier-table td { color: var(--text); }
-    .tier-table tr:last-child td { border-bottom: none; }
+    .stage.signed .stage-label    { color: #059669; }
+    .stage.submitted .stage-label { color: #0891B2; }
+    .stage.active .stage-label    { color: var(--purple); }
+    .stage.emerging .stage-label  { color: var(--dim); }
+    .stage-count { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .stage ul { list-style: none; }
+    .stage ul li {
+      font-size: 0.85rem; color: var(--text);
+      padding: 3px 0;
+    }
 
     /* Trend arrow box */
     .trend-box {
-      display: flex; align-items: center; gap: 16px;
-      padding: 20px 24px;
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px 20px;
       border-radius: 12px;
       border: 1.5px solid var(--border);
       background: #fff;
     }
     .trend-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
+      width: 40px; height: 40px;
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; font-weight: 700;
+      font-size: 1.2rem; font-weight: 700;
       flex-shrink: 0;
     }
     .trend-icon.warn { background: #FFFBEB; color: var(--amber); border: 1.5px solid #FDE68A; }
     .trend-icon.good { background: #ECFDF5; color: var(--green); border: 1.5px solid #A7F3D0; }
     .trend-icon.up   { background: var(--soft); color: var(--purple); border: 1.5px solid rgba(124,58,237,0.3); }
     .trend-box h4 { margin-bottom: 4px; }
-    .trend-box p  { font-size: 0.88rem; }
+    .trend-box p  { font-size: 0.85rem; }
 
-    .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .check-list li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: 0.95rem; color: var(--muted);
+      font-size: 0.92rem; color: var(--muted);
     }
     .check-list li::before {
       content: '✓'; color: var(--green); font-weight: 700;
       flex-shrink: 0; margin-top: 1px;
     }
+    .check-list.cyan li::before  { color: var(--cyan); }
+    .check-list.purple li::before { color: var(--purple); content: '→'; }
 
-    hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
     .slide-dark { background: var(--text) !important; }
     .slide-dark h1, .slide-dark h2, .slide-dark h3, .slide-dark h4 { color: #fff; }
@@ -198,12 +202,13 @@
     .slide-dark .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
     .slide-dark .card h3, .slide-dark .card h4 { color: #fff; }
     .slide-dark .card p { color: rgba(255,255,255,0.6); }
+    .slide-dark .check-list li { color: rgba(255,255,255,0.75); }
 
     .slide-tint { background: var(--bg-tint) !important; }
 
     nav.controls {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 80px;
+      padding: 10px 72px;
       border-top: 1px solid var(--border);
       background: #fff; z-index: 10; flex-shrink: 0;
     }
@@ -212,7 +217,7 @@
     .slide-counter { font-size: 0.8rem; color: var(--dim); font-family: 'JetBrains Mono', monospace; }
     .nav-btns { display:flex; gap:8px; }
     .nav-btn {
-      padding: 7px 20px; border-radius: 8px;
+      padding: 6px 18px; border-radius: 8px;
       font-size: 0.85rem; font-weight: 600;
       cursor: pointer;
       border: 1.5px solid var(--border);
@@ -232,7 +237,7 @@
     }
     .dot.active { background: var(--purple); width: 18px; border-radius: 3px; }
 
-    .slide-header { margin-bottom: 36px; }
+    .slide-header { margin-bottom: 28px; }
 
     .bg-blob {
       position: absolute; border-radius: 50%;
@@ -241,11 +246,13 @@
     .slide > * { position: relative; z-index: 1; }
 
     .key-hint {
-      position: fixed; bottom: 64px; right: 24px;
+      position: fixed; bottom: 56px; right: 24px;
       font-size: 0.7rem; color: var(--dim);
       font-family: 'JetBrains Mono', monospace;
       opacity: 0.6;
     }
+
+    .badge-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
   </style>
 </head>
 <body>
@@ -260,299 +267,420 @@
       <div class="bg-blob" style="width:600px;height:600px;top:-200px;right:-100px;background:radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 70%);"></div>
       <div class="bg-blob" style="width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(14,165,233,0.06) 0%,transparent 70%);"></div>
 
-      <div style="max-width:820px;">
+      <div style="max-width:920px;">
         <div class="eyebrow">Confidential · Investor Update · June 2026</div>
-        <h1 style="margin-bottom:24px;">Anduin —<br><span class="grad-text">Status Quo.</span></h1>
-        <p class="lead" style="max-width:620px;margin-bottom:40px;">
-          Where the pipeline stands, where lending sits with Revolut, and why our build velocity is the quiet story this quarter.
+        <h1 style="margin-bottom:20px;">Anduin —<br><span class="grad-text">Status Quo.</span></h1>
+        <p class="lead" style="max-width:680px;margin-bottom:36px;">
+          What the market is buying, what we're shipping, and where every named deal across lending and issuance actually stands.
         </p>
 
-        <div class="big-nums" style="max-width:720px;">
+        <div class="big-nums" style="max-width:820px;">
           <div class="big-num">
-            <span class="stat-val">21</span>
-            <span class="stat-label">Active Leads</span>
+            <span class="stat-val">4</span>
+            <span class="stat-label">Secured Deals</span>
           </div>
           <div class="big-num">
-            <span class="stat-val">3</span>
-            <span class="stat-label">Committed</span>
+            <span class="stat-val">12+</span>
+            <span class="stat-label">Active Conversations</span>
           </div>
           <div class="big-num">
             <span class="stat-val">1</span>
-            <span class="stat-label">In Conversation</span>
+            <span class="stat-label">Strategic Anchor</span>
           </div>
           <div class="big-num">
-            <span class="stat-val">81</span>
-            <span class="stat-label">Tests Passing</span>
+            <span class="stat-val">↑</span>
+            <span class="stat-label">Build Velocity</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 2: TL;DR — THE HONEST READ                        -->
+    <!-- SLIDE 2: TL;DR                                          -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-2">
       <div class="slide-header" style="text-align:center;">
-        <div class="eyebrow">TL;DR</div>
-        <h2>Slower than we'd hoped.<br><span class="grad-text">But moving — and growing.</span></h2>
+        <div class="eyebrow">The quarter in three lines</div>
+        <h2>The market clarified.<br>The pipeline filled.<br><span class="grad-text">Lending paused — replacement is hot.</span></h2>
       </div>
 
-      <div class="grid-3" style="max-width:1080px;margin:0 auto;">
-        <div class="trend-box">
-          <div class="trend-icon warn">≈</div>
-          <div>
-            <h4>Pipeline is slow</h4>
-            <p>Sales cycles in regulated finance are long. Every prospect is moving slower than our base case.</p>
-          </div>
-        </div>
+      <div class="grid-3" style="max-width:1100px;margin:0 auto;">
         <div class="trend-box">
           <div class="trend-icon good">↗</div>
           <div>
-            <h4>Still growing</h4>
-            <p>No committed client has dropped. List has widened from 9 → 21 since Q1.</p>
+            <h4>Demand sharpened</h4>
+            <p>Counterparties are explicit: alternatives to spot/high-leverage, plus yield with downside protection. Our product menu matches both asks.</p>
           </div>
         </div>
         <div class="trend-box">
-          <div class="trend-icon up">⚡</div>
+          <div class="trend-icon good">●</div>
           <div>
-            <h4>Build velocity is up</h4>
-            <p>AI tooling means we ship product faster than the pipeline pulls — we won't be the bottleneck.</p>
+            <h4>Issuance pipeline secured</h4>
+            <p>3 signed counterparties via DLT (Nexo, BitMEX, Bit2me) + Stellar Foundation as strategic anchor. Pipeline behind them is filling.</p>
+          </div>
+        </div>
+        <div class="trend-box">
+          <div class="trend-icon warn">≈</div>
+          <div>
+            <h4>Lending: Revolut slipped, Bitvavo rose</h4>
+            <p>Revolut deprioritized for IPO prep; go-live pushed. Bitvavo emerged as a hot margin-trading replacement.</p>
           </div>
         </div>
       </div>
 
-      <p style="text-align:center;margin-top:48px;max-width:760px;margin-left:auto;margin-right:auto;font-size:1.05rem;">
-        Three things investors should hold in their head at once: <strong style="color:var(--text);">the pipeline is slow, the pipeline is real, and the cost of being ready early just collapsed.</strong>
+      <p style="text-align:center;margin-top:36px;max-width:780px;margin-left:auto;margin-right:auto;font-size:1.02rem;">
+        Three things to hold in your head: <strong style="color:var(--text);">the demand is now legible, the pipeline is wider and deeper than three months ago, and the bottleneck has shifted from build to counterparty bandwidth.</strong>
       </p>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 3: PIPELINE VIEW                                  -->
+    <!-- SLIDE 3: MARKET STATE                                   -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide" id="slide-3">
       <div class="slide-header">
-        <div class="eyebrow">Pipeline</div>
-        <h2>21 leads · 3 committed · 1 in conversation</h2>
+        <div class="eyebrow">Market state</div>
+        <h2>Two demands, <span class="grad-text">one product family.</span></h2>
       </div>
 
-      <div class="pipeline-bar" style="max-width:1080px;">
-        <div class="pipe-seg committed" style="flex:3;">
-          <span class="seg-num">3</span>
-          <span class="seg-lbl">Committed</span>
+      <div class="grid-2" style="max-width:1120px;gap:24px;">
+        <div class="card purple">
+          <span class="card-tag">Demand 1 — away from</span>
+          <h3 style="margin-bottom:10px;">Spot and high-leverage perps are losing the marginal user.</h3>
+          <p style="margin-bottom:12px;">Retail and prosumer flows are migrating toward instruments with defined risk: capped downside, transparent payoff, regulated wrapper.</p>
+          <hr>
+          <span class="card-tag" style="margin-top:4px;">Anduin answers with</span>
+          <h4 style="margin-bottom:6px;">KO Certificates · Securitized Perpetuals</h4>
+          <p style="font-size:0.9rem;">Token-wrapped, capital-protected leverage. The perp economics, the certificate's regulatory clarity, on-chain rails.</p>
         </div>
-        <div class="pipe-seg prospect" style="flex:1;">
-          <span class="seg-num">1</span>
-          <span class="seg-lbl">Prospect</span>
-        </div>
-        <div class="pipe-seg cold" style="flex:17;">
-          <span class="seg-num">17</span>
-          <span class="seg-lbl">Not yet started</span>
+
+        <div class="card cyan">
+          <span class="card-tag">Demand 2 — toward</span>
+          <h3 style="margin-bottom:10px;">Yield with downside protection.</h3>
+          <p style="margin-bottom:12px;">Treasury allocators, exchanges with idle stablecoin balances, and prosumer wealth segments all asking the same question — where does conservative on-chain yield live?</p>
+          <hr>
+          <span class="card-tag" style="margin-top:4px;color:#0891B2;">Anduin answers with</span>
+          <h4 style="margin-bottom:6px;">tMMF · Structured Yield · Capital-Protected Notes</h4>
+          <p style="font-size:0.9rem;">Tokenized money-market exposure, structured yield products, principal-protected notes — under Anduin issuance, same product family the DLT deck already validated with counterparties.</p>
         </div>
       </div>
 
-      <table class="tier-table" style="max-width:1080px;">
-        <thead>
-          <tr>
-            <th>Tier</th>
-            <th>Count</th>
-            <th>Committed</th>
-            <th>In Conversation</th>
-            <th>Named anchors</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Tier 1</strong> — Strong entry</td>
-            <td>9</td>
-            <td>2</td>
-            <td>0</td>
-            <td>OSL · Bitvavo</td>
-          </tr>
-          <tr>
-            <td><strong>Tier 2</strong> — Good contact</td>
-            <td>5</td>
-            <td>1</td>
-            <td>1</td>
-            <td>Revolut · Axi</td>
-          </tr>
-          <tr>
-            <td><strong>Tier 3</strong> — Weaker entry</td>
-            <td>7</td>
-            <td>0</td>
-            <td>0</td>
-            <td>—</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p style="margin-top:20px;font-size:0.85rem;">
-        <span class="pill committed">Committed</span> = product LOI / verbal commitment in place.
-        <span class="pill prospect">Prospect</span> = active conversation, no LOI yet.
-        <span class="pill cold">Not started</span> = identified target, no contact attempted.
+      <p style="margin-top:24px;max-width:1120px;font-size:0.92rem;">
+        <strong style="color:var(--text);">Both demands collapse into the same architecture:</strong> Anduin issues a regulated token, the counterparty distributes, the on-chain plumbing is shared. One stack, two product lines, every conversation in the pipeline below maps to one or both.
       </p>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 4: ANDUIN LENDING — REVOLUT                       -->
+    <!-- SLIDE 4: ANDUIN LENDING PIPELINE                        -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-4">
       <div class="slide-header">
-        <div class="eyebrow">Anduin Lending</div>
-        <h2>Revolut: <span class="grad-text">moving — slowly.</span></h2>
+        <div class="eyebrow">Anduin Lending · Pipeline</div>
+        <h2>Anchor slipped. <span class="grad-text">Replacement is hotter.</span></h2>
       </div>
 
-      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:40px;max-width:1100px;align-items:start;">
-        <div>
-          <div class="card purple" style="margin-bottom:16px;">
-            <span class="card-tag">Where we stand</span>
-            <h3 style="margin-bottom:10px;">Lending is committed — but not a 2026 focus topic for them.</h3>
-            <p>Revolut leadership is heads-down on IPO preparation. New product initiatives outside the IPO narrative have been deprioritized. Our lending workstream has slipped, and the previously discussed go-live date has been pushed back.</p>
+      <div class="grid-3" style="max-width:1140px;">
+        <div class="card amber">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="pill submitted" style="background:#FFFBEB;color:#B45309;border-color:#FDE68A;">COMMITTED · PAUSED</span>
           </div>
+          <h3 style="margin-bottom:8px;">Revolut</h3>
+          <p style="font-size:0.9rem;">Committed counterparty. IPO preparation is absorbing leadership bandwidth — lending is not their 2026 focus topic. Go-live has been pushed back.</p>
+          <hr>
+          <p style="font-size:0.85rem;"><strong style="color:var(--text);">Read:</strong> queue, not fade. Relationship intact, technical case still resonates. Re-engage post-IPO; do not push for bandwidth they don't have.</p>
+        </div>
+
+        <div class="card" style="border-color:#FECACA;background:#FEF2F2;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="pill hot">HOT</span>
+          </div>
+          <h3 style="margin-bottom:8px;">Bitvavo</h3>
+          <p style="font-size:0.9rem;">Live, fast-moving conversation on margin trading. Bitvavo is the Tier-1 EU venue most explicit about wanting to add leveraged products with proper risk plumbing.</p>
+          <hr>
+          <p style="font-size:0.85rem;"><strong style="color:var(--text);">Read:</strong> the replacement for Revolut's slipped slot in the 2026 narrative. Convertible to LOI this quarter.</p>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="pill active">CFD CHANNEL</span>
+          </div>
+          <h3 style="margin-bottom:8px;">Libertex · CMC · XTB</h3>
+          <p style="font-size:0.9rem;">Three established CFD brokers in pipeline. Lending is the natural cross-sell: each is margin-heavy, MIFID-constrained, and looking for capital-efficient collateral infrastructure.</p>
+          <hr>
+          <p style="font-size:0.85rem;"><strong style="color:var(--text);">Read:</strong> a channel, not a one-shot. Winning one likely shortens cycle on the next two.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 5: ISSUANCE PIPELINE                              -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div class="eyebrow">Issuance · Pipeline</div>
+        <h2>Three signed. <span class="grad-text">Twelve more moving up the funnel.</span></h2>
+      </div>
+
+      <div class="stage-grid" style="max-width:1180px;">
+        <div class="stage signed">
+          <span class="stage-label">● Signed · via DLT</span>
+          <div class="stage-count">3</div>
+          <ul>
+            <li><strong>Nexo</strong></li>
+            <li><strong>BitMEX</strong></li>
+            <li><strong>Bit2me</strong></li>
+          </ul>
+          <p style="font-size:0.78rem;margin-top:10px;color:#059669;">Secured for Anduin via DLT relationship.</p>
+        </div>
+
+        <div class="stage submitted">
+          <span class="stage-label">→ Submitted Offer</span>
+          <div class="stage-count">1</div>
+          <ul>
+            <li><strong>MEXC</strong></li>
+          </ul>
+          <p style="font-size:0.78rem;margin-top:10px;color:#0891B2;">Proposal on the table; awaiting countersignal.</p>
+        </div>
+
+        <div class="stage active">
+          <span class="stage-label">↗ Actively Moving</span>
+          <div class="stage-count">4</div>
+          <ul>
+            <li>Bybit</li>
+            <li>Bitget</li>
+            <li>1inch</li>
+            <li>Bitpanda</li>
+          </ul>
+          <p style="font-size:0.78rem;margin-top:10px;color:var(--purple);">Multiple touchpoints, climbing the funnel.</p>
+        </div>
+
+        <div class="stage emerging">
+          <span class="stage-label">· Emerging</span>
+          <div class="stage-count">3</div>
+          <ul>
+            <li>Vancelian</li>
+            <li>Coinhouse</li>
+            <li>Young Platform</li>
+          </ul>
+          <p style="font-size:0.78rem;margin-top:10px;color:var(--muted);">Smaller venues — fast cycles, useful flow.</p>
+        </div>
+      </div>
+
+      <div class="card dark" style="margin-top:22px;max-width:1180px;">
+        <p style="color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.55;">
+          <strong style="color:#fff;">What changed this quarter:</strong> the issuance pipeline transformed from prospecting to execution. Three signed via the DLT distribution relationship convert directly into Anduin revenue. MEXC is days, not quarters, from response. The four "actively moving" names each have a champion inside the counterparty.
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 6: STELLAR FOUNDATION SPOTLIGHT                   -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide slide-dark" id="slide-6">
+      <div class="bg-blob" style="width:500px;height:500px;top:-150px;right:-50px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);"></div>
+
+      <div class="slide-header">
+        <div class="eyebrow">Strategic anchor</div>
+        <h2>Stellar Foundation —<br><span class="grad-text">Anduin as issuer for the chain.</span></h2>
+      </div>
+
+      <div class="grid-2" style="max-width:1140px;gap:28px;align-items:start;">
+        <div>
+          <div class="card" style="margin-bottom:14px;">
+            <span class="card-tag" style="color:#C4B5FD;">The ask</span>
+            <h3 style="margin-bottom:10px;color:#fff;">Tokenize all assets on the Stellar chain — with Anduin as issuer.</h3>
+            <p>Stellar Foundation has approached Anduin to be the issuance partner for assets brought on-chain into the Stellar ecosystem. This is a chain-level anchor relationship, not a one-product deal.</p>
+          </div>
+
           <div class="card">
-            <span class="card-tag">Read</span>
-            <h4 style="margin-bottom:8px;">This is not a fade — it's a queue.</h4>
-            <p>Nothing in the conversation indicates lost interest. The relationship is intact, the technical case still resonates, and they remain the named anchor for Lending. The constraint is bandwidth, not appetite.</p>
+            <span class="card-tag" style="color:#C4B5FD;">The distribution layer</span>
+            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:6px;">Bitpanda allocation already purchased.</h4>
+            <p>Stellar Foundation has acquired an allocation at Bitpanda specifically to distribute tokenized money-market and yield products — products Anduin will issue and fill on the supply side.</p>
           </div>
         </div>
 
         <div>
-          <div class="card dark">
-            <span class="card-tag" style="color:#C4B5FD;">Timeline</span>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:8px;">
-              <li style="font-size:0.92rem;">
-                <span style="color:var(--green);font-weight:600;">●</span>
-                &nbsp;Initial commitment — secured
-              </li>
-              <li style="font-size:0.92rem;">
-                <span style="color:var(--amber);font-weight:600;">●</span>
-                &nbsp;IPO prep absorbs bandwidth
-              </li>
-              <li style="font-size:0.92rem;">
-                <span style="color:var(--amber);font-weight:600;">●</span>
-                &nbsp;Go-live date pushed back
-              </li>
-              <li style="font-size:0.92rem;color:rgba(255,255,255,0.5);">
-                <span style="color:rgba(255,255,255,0.4);font-weight:600;">○</span>
-                &nbsp;Post-IPO re-engagement
-              </li>
+          <div class="card" style="margin-bottom:14px;background:rgba(124,58,237,0.15);border-color:rgba(124,58,237,0.3);">
+            <span class="card-tag" style="color:#C4B5FD;">Why this matters</span>
+            <ul class="check-list purple" style="margin-top:6px;">
+              <li style="color:rgba(255,255,255,0.9);">Chain-level relationship, not point-deal — every future Stellar tokenization touches us.</li>
+              <li style="color:rgba(255,255,255,0.9);">Distribution rail (Bitpanda) is already paid for and committed.</li>
+              <li style="color:rgba(255,255,255,0.9);">Product fit is the same family already developed for the issuance pipeline.</li>
+              <li style="color:rgba(255,255,255,0.9);">First proof that Anduin's positioning as neutral issuance infrastructure attracts foundation-tier counterparties.</li>
             </ul>
-            <hr style="margin:20px 0;">
-            <p style="font-size:0.85rem;">Approach: keep the relationship warm, advance product, do not push for resource we know they don't have right now.</p>
+          </div>
+
+          <div class="card">
+            <span class="card-tag" style="color:#C4B5FD;">Status</span>
+            <p>Conversation live. Engagement scope under structuring. We expect this to be the highest-leverage relationship in the issuance book by year-end.</p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 5: PIPELINE MOMENTUM — THE BIGGER PATTERN         -->
+    <!-- SLIDE 7: PIPELINE REALITY                               -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide" id="slide-5">
+    <div class="slide slide-tint" id="slide-7">
       <div class="slide-header">
-        <div class="eyebrow">Pipeline Momentum</div>
-        <h2>Slower than hoped — <span class="grad-text">but never going backwards.</span></h2>
+        <div class="eyebrow">Pipeline reality</div>
+        <h2>Slower than we'd hoped — <span class="grad-text">but never going backwards.</span></h2>
       </div>
 
-      <div class="grid-2" style="max-width:1080px;gap:24px;">
+      <div class="grid-2" style="max-width:1120px;gap:24px;">
         <div class="card">
           <span class="card-tag">What's true</span>
-          <h3 style="margin-bottom:14px;">Every cycle is taking longer than our base case.</h3>
-          <ul class="check-list" style="margin-top:8px;">
-            <li>Regulated counterparties = quarter-long internal cycles, not week-long ones.</li>
+          <h3 style="margin-bottom:12px;">Every cycle is taking longer than our base case.</h3>
+          <ul class="check-list" style="margin-top:6px;">
+            <li>Regulated counterparties run quarter-long internal cycles, not week-long ones.</li>
             <li>Decisions need legal, risk, and exec sign-off in parallel.</li>
-            <li>Q1 commitments still in technical-evaluation stage, not yet integrated.</li>
+            <li>Commitments take months to convert into integrated, live flow.</li>
+            <li>Honest framing: against the timeline we showed twelve months ago, we are behind.</li>
           </ul>
         </div>
         <div class="card purple">
           <span class="card-tag">What's also true</span>
-          <h3 style="margin-bottom:14px;">Movement is one-directional — toward us.</h3>
-          <ul class="check-list" style="margin-top:8px;">
-            <li>Lead list expanded 9 → 21 since the start of the year.</li>
-            <li>3 committed clients (OSL, Bitvavo, Revolut) all still in.</li>
-            <li>New Tier 1 entries on the back of inbound interest, not just outbound.</li>
+          <h3 style="margin-bottom:12px;">Movement is one-directional — toward us.</h3>
+          <ul class="check-list" style="margin-top:6px;">
+            <li>Issuance pipeline went from zero signed to three signed this quarter.</li>
+            <li>Stellar Foundation chose us — inbound, foundation-tier.</li>
+            <li>Bitvavo replaced Revolut's slipped slot in the lending narrative.</li>
+            <li>Zero counterparties have dropped. Every named relationship is still in.</li>
           </ul>
         </div>
       </div>
 
-      <div class="card dark" style="margin-top:24px;max-width:1080px;">
-        <p style="color:rgba(255,255,255,0.85);font-size:1.05rem;line-height:1.6;">
-          <strong style="color:#fff;">The honest framing:</strong> if you scored us against the timeline we showed twelve months ago, we are behind. If you score us against where regulated-finance B2B sales actually clears — three committed anchors, a widening Tier 1, and zero churn — we are early but on the curve.
+      <div class="card dark" style="margin-top:22px;max-width:1120px;">
+        <p style="color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.55;">
+          <strong style="color:#fff;">The honest read:</strong> measured against the original timeline, we're behind. Measured against where regulated-finance B2B sales actually clears — multiple signed anchors, a widening Tier 1, a foundation-tier inbound, and zero churn — we are early on a curve that's now legibly going up and to the right.
         </p>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 6: AI AS BUILD ACCELERATOR                        -->
+    <!-- SLIDE 8: AI / BUILD VELOCITY                            -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide slide-dark" id="slide-6">
+    <div class="slide slide-dark" id="slide-8">
       <div class="slide-header">
-        <div class="eyebrow">Build Velocity</div>
+        <div class="eyebrow">Build velocity</div>
         <h2>AI changed the economics<br>of being <span class="grad-text">ready early.</span></h2>
       </div>
 
-      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:40px;max-width:1100px;align-items:start;">
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:36px;max-width:1140px;align-items:start;">
         <div>
-          <p style="font-size:1.1rem;color:rgba(255,255,255,0.8);margin-bottom:24px;">
-            Two to three years ago, the build cost behind a settlement + lending + issuance stack was a team of 15 and 18 months of runway. That math is no longer true for us.
+          <p style="font-size:1.05rem;color:rgba(255,255,255,0.8);margin-bottom:20px;">
+            Two to three years ago, the build cost behind a settlement + lending + issuance stack was a team of fifteen and eighteen months of runway. That math is no longer true for us.
           </p>
           <ul class="check-list" style="margin-bottom:8px;">
             <li style="color:rgba(255,255,255,0.85);">AI-assisted development compresses contract, adapter, and integration work by an order of magnitude.</li>
             <li style="color:rgba(255,255,255,0.85);">We ship faster than the pipeline currently pulls — engineering is no longer the bottleneck.</li>
-            <li style="color:rgba(255,255,255,0.85);">When a Tier 1 client says "yes, build this for us," our time-to-integration is measured in weeks, not quarters.</li>
+            <li style="color:rgba(255,255,255,0.85);">When a Tier-1 counterparty says "build this for us," time-to-integration is measured in weeks, not quarters.</li>
+            <li style="color:rgba(255,255,255,0.85);">Two to three years of build budget collapsed into a fraction of headcount.</li>
           </ul>
         </div>
 
         <div>
-          <div class="card" style="margin-bottom:14px;">
+          <div class="card" style="margin-bottom:12px;">
             <span class="card-tag">Already shipped</span>
-            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:8px;">Full settlement stack</h4>
-            <p>UnifiedAccountVault, MultiCollateralVault (in progress), batch settlement, insurance waterfall — 81 tests passing.</p>
+            <h4 style="color:#fff;font-size:1rem;margin-bottom:6px;">Full settlement stack</h4>
+            <p style="font-size:0.9rem;">UnifiedAccountVault, MultiCollateralVault, batch settlement, insurance waterfall — all under test.</p>
           </div>
-          <div class="card" style="margin-bottom:14px;">
+          <div class="card" style="margin-bottom:12px;">
             <span class="card-tag">Already shipped</span>
-            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:8px;">8 exchange adapters</h4>
-            <p>Each adapter took days, not months. New venue onboarding is now a templated workflow.</p>
+            <h4 style="color:#fff;font-size:1rem;margin-bottom:6px;">8 exchange adapters</h4>
+            <p style="font-size:0.9rem;">Each adapter took days, not months. New venue onboarding is a templated workflow.</p>
           </div>
           <div class="card">
             <span class="card-tag">Implication</span>
-            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:8px;">Capital efficiency</h4>
-            <p>The funding we have stretches further. We do not need to raise to ship; we raise to distribute.</p>
+            <h4 style="color:#fff;font-size:1rem;margin-bottom:6px;">Capital efficiency</h4>
+            <p style="font-size:0.9rem;">The funding we have stretches further. We do not need to raise to ship; we raise to distribute.</p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 7: OUTLOOK & NEXT STEPS                           -->
+    <!-- SLIDE 9: WHAT WE'RE LOOKING FOR                         -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide" id="slide-7">
+    <div class="slide" id="slide-9">
+      <div class="slide-header">
+        <div class="eyebrow">Asks · What we're looking for</div>
+        <h2>Where investor leverage moves the needle <span class="grad-text">most.</span></h2>
+      </div>
+
+      <div class="grid-2" style="max-width:1140px;gap:18px;">
+        <div class="card cyan">
+          <span class="card-tag" style="color:#0891B2;">01 · Liquidity</span>
+          <h3 style="margin-bottom:8px;">Wholesale liquidity for lending</h3>
+          <p style="font-size:0.92rem;">Sourcing wholesale balance sheet for the lending product is occasionally tighter than we'd like. Introductions to liquidity providers, prime desks, or institutional credit lines unlock real volume on the deals already in pipeline.</p>
+        </div>
+
+        <div class="card purple">
+          <span class="card-tag">02 · Market-making</span>
+          <h3 style="margin-bottom:8px;">MM for structured product issuance</h3>
+          <p style="font-size:0.92rem;">As the issuance book expands, every new structured product needs a market-maker on the secondary side. We are actively looking for MM partners who can support tokenized perp/yield/note products on-chain.</p>
+        </div>
+
+        <div class="card">
+          <span class="card-tag">03 · Throughput</span>
+          <h3 style="margin-bottom:8px;">More parallelization of work tracks</h3>
+          <p style="font-size:0.92rem;">Build velocity is high but serialized. With the right hires or partnerships, we can run more product tracks in parallel and pump out the structured-product menu faster than we currently are.</p>
+        </div>
+
+        <div class="card" style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(14,165,233,0.06));border-color:rgba(124,58,237,0.2);">
+          <span class="card-tag">04 · New frontier</span>
+          <h3 style="margin-bottom:8px;">Prediction markets securitization</h3>
+          <p style="font-size:0.92rem;">An emerging product line we want to lean into: securitizing prediction-market exposure into regulated, tokenized instruments. Open to capital and counterparty intros that accelerate this build.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 10: OUTLOOK / CLOSE                               -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide slide-tint" id="slide-10">
       <div class="slide-header" style="text-align:center;">
         <div class="eyebrow">Outlook</div>
         <h2>What we're doing this quarter.</h2>
       </div>
 
-      <div class="grid-3" style="max-width:1100px;margin:0 auto;">
+      <div class="grid-3" style="max-width:1140px;margin:0 auto;">
         <div class="card">
-          <span class="card-tag">01 — Keep warm</span>
-          <h3 style="margin-bottom:10px;">Revolut, post-IPO re-engagement</h3>
-          <p>Stay close without consuming bandwidth they don't have. Be the easy "yes" the day IPO prep clears.</p>
+          <span class="card-tag">01 — Close</span>
+          <h3 style="margin-bottom:8px;">Stellar Foundation</h3>
+          <p style="font-size:0.9rem;">Structure the engagement, lock the issuance scope, get the Bitpanda allocation flowing through Anduin rails.</p>
         </div>
         <div class="card purple">
-          <span class="card-tag">02 — Activate</span>
-          <h3 style="margin-bottom:10px;">Next 2–3 Tier 1 conversations</h3>
-          <p>OSL and Bitvavo timelines firmed up. Open dialogue with named eToro, Bitget, and B2C2 contacts.</p>
+          <span class="card-tag">02 — Convert</span>
+          <h3 style="margin-bottom:8px;">Bitvavo → LOI</h3>
+          <p style="font-size:0.9rem;">Move the hot lending conversation from verbal to signed. Replaces Revolut's slipped slot in the narrative.</p>
         </div>
         <div class="card">
-          <span class="card-tag">03 — Compound</span>
-          <h3 style="margin-bottom:10px;">Convert build velocity into demos</h3>
-          <p>Every shipped feature becomes a sales asset. Goal: cut time-from-demo-to-LOI in half.</p>
+          <span class="card-tag">03 — Activate</span>
+          <h3 style="margin-bottom:8px;">2–3 more Tier-1 issuance names</h3>
+          <p style="font-size:0.9rem;">Close MEXC. Move Bybit/Bitget/Bitpanda from "active" to "submitted." Compounding signing momentum.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">04 — Hire</span>
+          <h3 style="margin-bottom:8px;">Liquidity + MM partners</h3>
+          <p style="font-size:0.9rem;">Land wholesale liquidity for lending and a structured-product market-maker, unblocking secondary trading.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">05 — Stay warm</span>
+          <h3 style="margin-bottom:8px;">Revolut, post-IPO</h3>
+          <p style="font-size:0.9rem;">No bandwidth pressure. Be the easy "yes" the day IPO prep clears.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">06 — Extend</span>
+          <h3 style="margin-bottom:8px;">Prediction-market product line</h3>
+          <p style="font-size:0.9rem;">First sketch of the securitization architecture. Move from concept to scoped build.</p>
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:48px;max-width:780px;margin-left:auto;margin-right:auto;">
-        <p style="font-size:1.05rem;">
-          We're playing a slower game than the deck said twelve months ago. We're also playing it from a position with <strong style="color:var(--text);">a working stack, named anchors in three product lines, and a cost base that AI has structurally lowered.</strong> That trade is one we'd take again.
+      <div style="text-align:center;margin-top:36px;max-width:840px;margin-left:auto;margin-right:auto;">
+        <p style="font-size:1.02rem;">
+          We're playing a slower game than the deck said twelve months ago. We're also playing it from a position with <strong style="color:var(--text);">three signed issuance counterparties, a foundation-tier anchor, a hot lending replacement, and a build cost that AI has structurally lowered.</strong> That trade is one we'd take again.
         </p>
-        <div style="margin-top:32px;font-size:0.78rem;color:var(--dim);font-family:'JetBrains Mono',monospace;">
+        <div style="margin-top:24px;font-size:0.76rem;color:var(--dim);font-family:'JetBrains Mono',monospace;">
           Confidential · June 2026 · max@anduin.finance
         </div>
       </div>
@@ -563,7 +691,7 @@
   <nav class="controls" id="navBar">
     <div style="display:flex;align-items:center;gap:16px;">
       <span class="nav-brand">anduin<span>.</span></span>
-      <span class="slide-counter" id="counter">1 / 7</span>
+      <span class="slide-counter" id="counter">1 / 10</span>
     </div>
     <div class="dots" id="dots"></div>
     <div class="nav-btns">
