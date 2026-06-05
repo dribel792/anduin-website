@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anduin — Investor Status Update · June 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple:   #7C3AED;
+      --violet:   #5B21B6;
+      --soft:     #EDE9FE;
+      --cyan:     #0EA5E9;
+      --green:    #10B981;
+      --amber:    #F59E0B;
+      --red:      #EF4444;
+      --bg:       #FFFFFF;
+      --bg-tint:  #F7F5FF;
+      --text:     #0D0820;
+      --muted:    #6B7280;
+      --dim:      #9CA3AF;
+      --border:   #E5E7EB;
+      --grad:     linear-gradient(135deg, #7C3AED 0%, #0EA5E9 100%);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; background:#111; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .deck { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+    .slides { flex:1; position:relative; overflow:hidden; }
+
+    .slide {
+      position: absolute; inset: 0;
+      background: var(--bg);
+      padding: 64px 80px;
+      display: none; flex-direction: column; justify-content: center;
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    .slide.active { display:flex; opacity:1; }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--purple);
+      background: var(--soft);
+      border: 1px solid rgba(124,58,237,0.2);
+      padding: 4px 14px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    h1 { font-size: 4rem;   font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); }
+    h2 { font-size: 2.6rem; font-weight: 700; line-height: 1.1;  letter-spacing: -0.025em; color: var(--text); }
+    h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.2;  letter-spacing: -0.02em; color: var(--text); }
+    h4 { font-size: 1rem;   font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p { font-size: 1rem; color: var(--muted); line-height: 1.65; }
+    .lead { font-size: 1.15rem; color: var(--muted); line-height: 1.6; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+
+    .card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+    .card.purple { background: var(--soft); border-color: rgba(124,58,237,0.3); }
+    .card.dark   { background: var(--text); border-color: var(--text); color:#fff; }
+    .card.dark h3, .card.dark h4 { color:#fff; }
+    .card.dark p  { color:rgba(255,255,255,0.7); }
+
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--purple);
+      margin-bottom: 12px; display: block;
+    }
+
+    .stat-val {
+      font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em;
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1; display: block; margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--dim);
+    }
+
+    .big-nums {
+      display: flex; gap: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      background: #fff; margin-top: 32px;
+    }
+    .big-num { flex:1; padding: 28px; text-align:center; border-right: 1px solid var(--border); }
+    .big-num:last-child { border-right: none; }
+
+    .pill {
+      display: inline-block; font-size: 0.75rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 100px; margin: 3px;
+    }
+    .pill.committed { background: #ECFDF5; color: #059669; border:1px solid #A7F3D0; }
+    .pill.prospect  { background: var(--soft); color: var(--purple); border:1px solid rgba(124,58,237,0.2); }
+    .pill.cold      { background: #F3F4F6; color: var(--muted); border:1px solid var(--border); }
+
+    /* Pipeline bar */
+    .pipeline-bar {
+      display: flex; height: 64px;
+      border-radius: 12px; overflow: hidden;
+      border: 1.5px solid var(--border);
+      margin-top: 24px;
+    }
+    .pipe-seg {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #fff; padding: 0 12px;
+    }
+    .pipe-seg .seg-num { font-weight: 700; font-size: 1.2rem; line-height: 1; }
+    .pipe-seg .seg-lbl { font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px; opacity: 0.9; }
+    .pipe-seg.committed { background: var(--green); }
+    .pipe-seg.prospect  { background: var(--purple); }
+    .pipe-seg.cold      { background: #CBD5E1; color: var(--text); }
+
+    /* Tier table */
+    .tier-table {
+      width: 100%; border-collapse: collapse;
+      border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden;
+      margin-top: 20px;
+    }
+    .tier-table th, .tier-table td {
+      padding: 14px 18px; text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .tier-table th {
+      background: var(--bg-tint);
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--dim); font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tier-table td { color: var(--text); }
+    .tier-table tr:last-child td { border-bottom: none; }
+
+    /* Trend arrow box */
+    .trend-box {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 24px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+    }
+    .trend-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .trend-icon.warn { background: #FFFBEB; color: var(--amber); border: 1.5px solid #FDE68A; }
+    .trend-icon.good { background: #ECFDF5; color: var(--green); border: 1.5px solid #A7F3D0; }
+    .trend-icon.up   { background: var(--soft); color: var(--purple); border: 1.5px solid rgba(124,58,237,0.3); }
+    .trend-box h4 { margin-bottom: 4px; }
+    .trend-box p  { font-size: 0.88rem; }
+
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.95rem; color: var(--muted);
+    }
+    .check-list li::before {
+      content: '✓'; color: var(--green); font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+    .slide-dark { background: var(--text) !important; }
+    .slide-dark h1, .slide-dark h2, .slide-dark h3, .slide-dark h4 { color: #fff; }
+    .slide-dark p, .slide-dark .stat-label, .slide-dark .lead { color: rgba(255,255,255,0.65); }
+    .slide-dark .eyebrow { background: rgba(124,58,237,0.2); color: #C4B5FD; border-color: rgba(124,58,237,0.3); }
+    .slide-dark hr { border-color: rgba(255,255,255,0.08); }
+    .slide-dark .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+    .slide-dark .card h3, .slide-dark .card h4 { color: #fff; }
+    .slide-dark .card p { color: rgba(255,255,255,0.6); }
+
+    .slide-tint { background: var(--bg-tint) !important; }
+
+    nav.controls {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 80px;
+      border-top: 1px solid var(--border);
+      background: #fff; z-index: 10; flex-shrink: 0;
+    }
+    .nav-brand { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; }
+    .nav-brand span { color: var(--purple); }
+    .slide-counter { font-size: 0.8rem; color: var(--dim); font-family: 'JetBrains Mono', monospace; }
+    .nav-btns { display:flex; gap:8px; }
+    .nav-btn {
+      padding: 7px 20px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: #fff; color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all .15s;
+    }
+    .nav-btn:hover { border-color: var(--purple); color: var(--purple); }
+    .nav-btn.primary { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .nav-btn.primary:hover { background: var(--violet); }
+
+    .dots { display: flex; gap: 6px; align-items: center; }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); cursor: pointer;
+      transition: all .2s;
+    }
+    .dot.active { background: var(--purple); width: 18px; border-radius: 3px; }
+
+    .slide-header { margin-bottom: 36px; }
+
+    .bg-blob {
+      position: absolute; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+    }
+    .slide > * { position: relative; z-index: 1; }
+
+    .key-hint {
+      position: fixed; bottom: 64px; right: 24px;
+      font-size: 0.7rem; color: var(--dim);
+      font-family: 'JetBrains Mono', monospace;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="slides" id="slides">
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 1: COVER                                          -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide active" id="slide-1">
+      <div class="bg-blob" style="width:600px;height:600px;top:-200px;right:-100px;background:radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 70%);"></div>
+      <div class="bg-blob" style="width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(14,165,233,0.06) 0%,transparent 70%);"></div>
+
+      <div style="max-width:820px;">
+        <div class="eyebrow">Confidential · Investor Update · June 2026</div>
+        <h1 style="margin-bottom:24px;">Anduin —<br><span class="grad-text">Status Quo.</span></h1>
+        <p class="lead" style="max-width:620px;margin-bottom:40px;">
+          Where the pipeline stands, where lending sits with Revolut, and why our build velocity is the quiet story this quarter.
+        </p>
+
+        <div class="big-nums" style="max-width:720px;">
+          <div class="big-num">
+            <span class="stat-val">21</span>
+            <span class="stat-label">Active Leads</span>
+          </div>
+          <div class="big-num">
+            <span class="stat-val">3</span>
+            <span class="stat-label">Committed</span>
+          </div>
+          <div class="big-num">
+            <span class="stat-val">1</span>
+            <span class="stat-label">In Conversation</span>
+          </div>
+          <div class="big-num">
+            <span class="stat-val">81</span>
+            <span class="stat-label">Tests Passing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 2: TL;DR — THE HONEST READ                        -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide slide-tint" id="slide-2">
+      <div class="slide-header" style="text-align:center;">
+        <div class="eyebrow">TL;DR</div>
+        <h2>Slower than we'd hoped.<br><span class="grad-text">But moving — and growing.</span></h2>
+      </div>
+
+      <div class="grid-3" style="max-width:1080px;margin:0 auto;">
+        <div class="trend-box">
+          <div class="trend-icon warn">≈</div>
+          <div>
+            <h4>Pipeline is slow</h4>
+            <p>Sales cycles in regulated finance are long. Every prospect is moving slower than our base case.</p>
+          </div>
+        </div>
+        <div class="trend-box">
+          <div class="trend-icon good">↗</div>
+          <div>
+            <h4>Still growing</h4>
+            <p>No committed client has dropped. List has widened from 9 → 21 since Q1.</p>
+          </div>
+        </div>
+        <div class="trend-box">
+          <div class="trend-icon up">⚡</div>
+          <div>
+            <h4>Build velocity is up</h4>
+            <p>AI tooling means we ship product faster than the pipeline pulls — we won't be the bottleneck.</p>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:48px;max-width:760px;margin-left:auto;margin-right:auto;font-size:1.05rem;">
+        Three things investors should hold in their head at once: <strong style="color:var(--text);">the pipeline is slow, the pipeline is real, and the cost of being ready early just collapsed.</strong>
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 3: PIPELINE VIEW                                  -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="eyebrow">Pipeline</div>
+        <h2>21 leads · 3 committed · 1 in conversation</h2>
+      </div>
+
+      <div class="pipeline-bar" style="max-width:1080px;">
+        <div class="pipe-seg committed" style="flex:3;">
+          <span class="seg-num">3</span>
+          <span class="seg-lbl">Committed</span>
+        </div>
+        <div class="pipe-seg prospect" style="flex:1;">
+          <span class="seg-num">1</span>
+          <span class="seg-lbl">Prospect</span>
+        </div>
+        <div class="pipe-seg cold" style="flex:17;">
+          <span class="seg-num">17</span>
+          <span class="seg-lbl">Not yet started</span>
+        </div>
+      </div>
+
+      <table class="tier-table" style="max-width:1080px;">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Count</th>
+            <th>Committed</th>
+            <th>In Conversation</th>
+            <th>Named anchors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tier 1</strong> — Strong entry</td>
+            <td>9</td>
+            <td>2</td>
+            <td>0</td>
+            <td>OSL · Bitvavo</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 2</strong> — Good contact</td>
+            <td>5</td>
+            <td>1</td>
+            <td>1</td>
+            <td>Revolut · Axi</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 3</strong> — Weaker entry</td>
+            <td>7</td>
+            <td>0</td>
+            <td>0</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:20px;font-size:0.85rem;">
+        <span class="pill committed">Committed</span> = product LOI / verbal commitment in place.
+        <span class="pill prospect">Prospect</span> = active conversation, no LOI yet.
+        <span class="pill cold">Not started</span> = identified target, no contact attempted.
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 4: ANDUIN LENDING — REVOLUT                       -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide slide-tint" id="slide-4">
+      <div class="slide-header">
+        <div class="eyebrow">Anduin Lending</div>
+        <h2>Revolut: <span class="grad-text">moving — slowly.</span></h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:40px;max-width:1100px;align-items:start;">
+        <div>
+          <div class="card purple" style="margin-bottom:16px;">
+            <span class="card-tag">Where we stand</span>
+            <h3 style="margin-bottom:10px;">Lending is committed — but not a 2026 focus topic for them.</h3>
+            <p>Revolut leadership is heads-down on IPO preparation. New product initiatives outside the IPO narrative have been deprioritized. Our lending workstream has slipped, and the previously discussed go-live date has been pushed back.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">Read</span>
+            <h4 style="margin-bottom:8px;">This is not a fade — it's a queue.</h4>
+            <p>Nothing in the conversation indicates lost interest. The relationship is intact, the technical case still resonates, and they remain the named anchor for Lending. The constraint is bandwidth, not appetite.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card dark">
+            <span class="card-tag" style="color:#C4B5FD;">Timeline</span>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:8px;">
+              <li style="font-size:0.92rem;">
+                <span style="color:var(--green);font-weight:600;">●</span>
+                &nbsp;Initial commitment — secured
+              </li>
+              <li style="font-size:0.92rem;">
+                <span style="color:var(--amber);font-weight:600;">●</span>
+                &nbsp;IPO prep absorbs bandwidth
+              </li>
+              <li style="font-size:0.92rem;">
+                <span style="color:var(--amber);font-weight:600;">●</span>
+                &nbsp;Go-live date pushed back
+              </li>
+              <li style="font-size:0.92rem;color:rgba(255,255,255,0.5);">
+                <span style="color:rgba(255,255,255,0.4);font-weight:600;">○</span>
+                &nbsp;Post-IPO re-engagement
+              </li>
+            </ul>
+            <hr style="margin:20px 0;">
+            <p style="font-size:0.85rem;">Approach: keep the relationship warm, advance product, do not push for resource we know they don't have right now.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 5: PIPELINE MOMENTUM — THE BIGGER PATTERN         -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div class="eyebrow">Pipeline Momentum</div>
+        <h2>Slower than hoped — <span class="grad-text">but never going backwards.</span></h2>
+      </div>
+
+      <div class="grid-2" style="max-width:1080px;gap:24px;">
+        <div class="card">
+          <span class="card-tag">What's true</span>
+          <h3 style="margin-bottom:14px;">Every cycle is taking longer than our base case.</h3>
+          <ul class="check-list" style="margin-top:8px;">
+            <li>Regulated counterparties = quarter-long internal cycles, not week-long ones.</li>
+            <li>Decisions need legal, risk, and exec sign-off in parallel.</li>
+            <li>Q1 commitments still in technical-evaluation stage, not yet integrated.</li>
+          </ul>
+        </div>
+        <div class="card purple">
+          <span class="card-tag">What's also true</span>
+          <h3 style="margin-bottom:14px;">Movement is one-directional — toward us.</h3>
+          <ul class="check-list" style="margin-top:8px;">
+            <li>Lead list expanded 9 → 21 since the start of the year.</li>
+            <li>3 committed clients (OSL, Bitvavo, Revolut) all still in.</li>
+            <li>New Tier 1 entries on the back of inbound interest, not just outbound.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card dark" style="margin-top:24px;max-width:1080px;">
+        <p style="color:rgba(255,255,255,0.85);font-size:1.05rem;line-height:1.6;">
+          <strong style="color:#fff;">The honest framing:</strong> if you scored us against the timeline we showed twelve months ago, we are behind. If you score us against where regulated-finance B2B sales actually clears — three committed anchors, a widening Tier 1, and zero churn — we are early but on the curve.
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 6: AI AS BUILD ACCELERATOR                        -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide slide-dark" id="slide-6">
+      <div class="slide-header">
+        <div class="eyebrow">Build Velocity</div>
+        <h2>AI changed the economics<br>of being <span class="grad-text">ready early.</span></h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:40px;max-width:1100px;align-items:start;">
+        <div>
+          <p style="font-size:1.1rem;color:rgba(255,255,255,0.8);margin-bottom:24px;">
+            Two to three years ago, the build cost behind a settlement + lending + issuance stack was a team of 15 and 18 months of runway. That math is no longer true for us.
+          </p>
+          <ul class="check-list" style="margin-bottom:8px;">
+            <li style="color:rgba(255,255,255,0.85);">AI-assisted development compresses contract, adapter, and integration work by an order of magnitude.</li>
+            <li style="color:rgba(255,255,255,0.85);">We ship faster than the pipeline currently pulls — engineering is no longer the bottleneck.</li>
+            <li style="color:rgba(255,255,255,0.85);">When a Tier 1 client says "yes, build this for us," our time-to-integration is measured in weeks, not quarters.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:14px;">
+            <span class="card-tag">Already shipped</span>
+            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:8px;">Full settlement stack</h4>
+            <p>UnifiedAccountVault, MultiCollateralVault (in progress), batch settlement, insurance waterfall — 81 tests passing.</p>
+          </div>
+          <div class="card" style="margin-bottom:14px;">
+            <span class="card-tag">Already shipped</span>
+            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:8px;">8 exchange adapters</h4>
+            <p>Each adapter took days, not months. New venue onboarding is now a templated workflow.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">Implication</span>
+            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:8px;">Capital efficiency</h4>
+            <p>The funding we have stretches further. We do not need to raise to ship; we raise to distribute.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 7: OUTLOOK & NEXT STEPS                           -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header" style="text-align:center;">
+        <div class="eyebrow">Outlook</div>
+        <h2>What we're doing this quarter.</h2>
+      </div>
+
+      <div class="grid-3" style="max-width:1100px;margin:0 auto;">
+        <div class="card">
+          <span class="card-tag">01 — Keep warm</span>
+          <h3 style="margin-bottom:10px;">Revolut, post-IPO re-engagement</h3>
+          <p>Stay close without consuming bandwidth they don't have. Be the easy "yes" the day IPO prep clears.</p>
+        </div>
+        <div class="card purple">
+          <span class="card-tag">02 — Activate</span>
+          <h3 style="margin-bottom:10px;">Next 2–3 Tier 1 conversations</h3>
+          <p>OSL and Bitvavo timelines firmed up. Open dialogue with named eToro, Bitget, and B2C2 contacts.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">03 — Compound</span>
+          <h3 style="margin-bottom:10px;">Convert build velocity into demos</h3>
+          <p>Every shipped feature becomes a sales asset. Goal: cut time-from-demo-to-LOI in half.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:48px;max-width:780px;margin-left:auto;margin-right:auto;">
+        <p style="font-size:1.05rem;">
+          We're playing a slower game than the deck said twelve months ago. We're also playing it from a position with <strong style="color:var(--text);">a working stack, named anchors in three product lines, and a cost base that AI has structurally lowered.</strong> That trade is one we'd take again.
+        </p>
+        <div style="margin-top:32px;font-size:0.78rem;color:var(--dim);font-family:'JetBrains Mono',monospace;">
+          Confidential · June 2026 · max@anduin.finance
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav class="controls" id="navBar">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span class="nav-brand">anduin<span>.</span></span>
+      <span class="slide-counter" id="counter">1 / 7</span>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div class="nav-btns">
+      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">← Prev</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)">Next →</button>
+    </div>
+  </nav>
+</div>
+
+<div class="key-hint">← → to navigate · F for fullscreen</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let current  = 0;
+
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(total - 1, n));
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+
+    const navBar = document.getElementById('navBar');
+    const isDark = slides[current].classList.contains('slide-dark');
+    navBar.style.background = isDark ? '#0D0820' : '#fff';
+    navBar.style.borderColor = isDark ? 'rgba(255,255,255,0.08)' : '#E5E7EB';
+    document.querySelectorAll('.nav-btn:not(.primary)').forEach(b => {
+      b.style.color = isDark ? 'rgba(255,255,255,0.7)' : '';
+      b.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '';
+      b.style.background = isDark ? 'transparent' : '';
+    });
+    document.querySelector('.nav-brand').style.color = isDark ? '#fff' : '';
+    document.getElementById('counter').style.color = isDark ? 'rgba(255,255,255,0.4)' : '';
+    dotsEl.querySelectorAll('.dot').forEach(d => {
+      d.style.background = d.classList.contains('active') ? '#7C3AED' : (isDark ? 'rgba(255,255,255,0.2)' : '#E5E7EB');
+    });
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+    if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+  });
+</script>
+</body>
+</html>
