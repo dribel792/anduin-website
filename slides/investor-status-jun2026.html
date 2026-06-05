@@ -5,291 +5,469 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anduin — Investor Status Update · June 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --purple:   #7C3AED;
-      --violet:   #5B21B6;
-      --soft:     #EDE9FE;
-      --cyan:     #0EA5E9;
-      --green:    #10B981;
-      --amber:    #F59E0B;
-      --red:      #EF4444;
-      --bg:       #FFFFFF;
-      --bg-tint:  #F7F5FF;
-      --text:     #0D0820;
-      --muted:    #6B7280;
-      --dim:      #9CA3AF;
-      --border:   #E5E7EB;
-      --grad:     linear-gradient(135deg, #7C3AED 0%, #0EA5E9 100%);
+      --bg:         #0A0E1A;
+      --bg-alt:     #0F1525;
+      --bg-warm:    #1A0E08;
+      --surface:    rgba(255,255,255,0.03);
+      --surface-2:  rgba(255,255,255,0.06);
+      --line:       rgba(255,255,255,0.08);
+      --line-mid:   rgba(255,255,255,0.14);
+      --line-strong:rgba(255,255,255,0.22);
+      --ink:        #F5F1E8;
+      --ink-soft:   #D1D5DB;
+      --muted:      #9CA3AF;
+      --dim:        #6B7280;
+      --amber:      #F59E0B;
+      --amber-2:    #FCD34D;
+      --cyan:       #22D3EE;
+      --green:      #34D399;
+      --red:        #F87171;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { width:100%; height:100%; overflow:hidden; background:#111; }
+    html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 
     body {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
       -webkit-font-smoothing: antialiased;
+      color: var(--ink);
     }
 
-    .deck { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+    .deck { width: 100vw; height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
+
+    /* ── Top status bar (Bloomberg-style chrome) ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 56px;
+      border-bottom: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.2);
+    }
+    .topbar .brand { color: var(--ink); font-weight: 600; }
+    .topbar .brand .dot { color: var(--amber); margin: 0 6px; }
+    .topbar .stamp { color: var(--dim); }
+    .topbar .stamp .live { color: var(--green); margin-right: 8px; }
+    .topbar .stamp .live::before { content: '●'; margin-right: 4px; }
+
     .slides { flex:1; position:relative; overflow:hidden; }
 
     .slide {
       position: absolute; inset: 0;
       background: var(--bg);
-      padding: 56px 72px;
-      display: none; flex-direction: column; justify-content: center;
+      padding: 48px 56px 32px;
+      display: none; flex-direction: column;
       opacity: 0; transition: opacity 0.4s ease;
       overflow-y: auto;
     }
     .slide.active { display:flex; opacity:1; }
+    .slide-tint { background: var(--bg-alt) !important; }
+    .slide-warm { background: var(--bg-warm) !important; }
 
-    .eyebrow {
-      display: inline-block;
-      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--purple);
-      background: var(--soft);
-      border: 1px solid rgba(124,58,237,0.2);
-      padding: 4px 14px; border-radius: 100px;
-      margin-bottom: 18px;
-    }
-
-    h1 { font-size: 3.8rem; font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); }
-    h2 { font-size: 2.4rem; font-weight: 700; line-height: 1.1;  letter-spacing: -0.025em; color: var(--text); }
-    h3 { font-size: 1.4rem; font-weight: 700; line-height: 1.2;  letter-spacing: -0.02em; color: var(--text); }
-    h4 { font-size: 1rem;   font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-
-    .grad-text {
-      background: var(--grad);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    p { font-size: 0.98rem; color: var(--muted); line-height: 1.6; }
-    .lead { font-size: 1.1rem; color: var(--muted); line-height: 1.55; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-
-    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
-    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-
-    .card {
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 22px 22px;
-    }
-    .card.purple { background: var(--soft); border-color: rgba(124,58,237,0.3); }
-    .card.dark   { background: var(--text); border-color: var(--text); color:#fff; }
-    .card.dark h3, .card.dark h4 { color:#fff; }
-    .card.dark p  { color:rgba(255,255,255,0.7); }
-    .card.green  { background: #ECFDF5; border-color: #A7F3D0; }
-    .card.amber  { background: #FFFBEB; border-color: #FDE68A; }
-    .card.cyan   { background: #ECFEFF; border-color: #A5F3FC; }
-
-    .card-tag {
+    /* ── Section labels ── */
+    .label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--purple);
-      margin-bottom: 10px; display: block;
-    }
-
-    .stat-val {
-      font-size: 2.6rem; font-weight: 700; letter-spacing: -0.04em;
-      background: var(--grad);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1; display: block; margin-bottom: 6px;
-    }
-    .stat-label {
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--dim);
-    }
-
-    .big-nums {
-      display: flex; gap: 0;
-      border: 1.5px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-      background: #fff; margin-top: 28px;
-    }
-    .big-num { flex:1; padding: 24px; text-align:center; border-right: 1px solid var(--border); }
-    .big-num:last-child { border-right: none; }
-
-    .pill {
-      display: inline-block; font-size: 0.7rem; font-weight: 600;
-      padding: 3px 10px; border-radius: 100px; margin: 2px;
-      font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;
-    }
-    .pill.signed    { background: #ECFDF5; color: #059669; border:1px solid #A7F3D0; }
-    .pill.hot       { background: #FEF2F2; color: #DC2626; border:1px solid #FECACA; }
-    .pill.submitted { background: #ECFEFF; color: #0891B2; border:1px solid #A5F3FC; }
-    .pill.active    { background: var(--soft); color: var(--purple); border:1px solid rgba(124,58,237,0.2); }
-    .pill.emerging  { background: #F3F4F6; color: var(--muted); border:1px solid var(--border); }
-
-    /* Pipeline stage bar */
-    .stage-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-      margin-top: 8px;
-    }
-    .stage {
-      border-radius: 12px;
-      padding: 18px 18px;
-      border: 1.5px solid var(--border);
-      background: #fff;
-    }
-    .stage.signed    { border-color: #A7F3D0; background: #ECFDF5; }
-    .stage.submitted { border-color: #A5F3FC; background: #ECFEFF; }
-    .stage.active    { border-color: rgba(124,58,237,0.3); background: var(--soft); }
-    .stage.emerging  { border-color: var(--border); background: #FAFAFA; }
-    .stage-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem; letter-spacing: 0.1em;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      margin-bottom: 6px; display:block;
+      color: var(--amber);
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-bottom: 14px;
     }
-    .stage.signed .stage-label    { color: #059669; }
-    .stage.submitted .stage-label { color: #0891B2; }
-    .stage.active .stage-label    { color: var(--purple); }
-    .stage.emerging .stage-label  { color: var(--dim); }
-    .stage-count { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
-    .stage ul { list-style: none; }
-    .stage ul li {
-      font-size: 0.85rem; color: var(--text);
-      padding: 3px 0;
+    .label::before {
+      content: ''; display: inline-block;
+      width: 8px; height: 8px; background: var(--amber);
+    }
+    .label.cyan { color: var(--cyan); }
+    .label.cyan::before { background: var(--cyan); }
+    .label.muted { color: var(--muted); }
+    .label.muted::before { background: var(--muted); }
+
+    /* ── Typography ── */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.08;
+    }
+    h1 { font-size: 4.2rem; font-weight: 700; }
+    h2 { font-size: 2.6rem; font-weight: 600; line-height: 1.12; }
+    h3 { font-size: 1.35rem; font-weight: 600; line-height: 1.25; }
+    h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    em, .em { font-style: italic; color: var(--amber-2); font-family: 'Playfair Display', serif; font-weight: 500; }
+    .em-cyan { font-style: italic; color: var(--cyan); font-family: 'Playfair Display', serif; font-weight: 500; }
+
+    p {
+      font-size: 0.96rem; line-height: 1.65;
+      color: var(--ink-soft); font-weight: 400;
+    }
+    p.lead {
+      font-size: 1.1rem; line-height: 1.55;
+      color: var(--ink-soft); font-weight: 300;
+      max-width: 720px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Rules ── */
+    .rule { height: 1px; background: var(--line); margin: 18px 0; border: none; }
+    .rule.strong { background: var(--line-strong); }
+    .rule.amber  { background: var(--amber); height: 2px; margin: 14px 0; }
+
+    /* ── Grids ── */
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+    .grid-2 > * + * { border-left: 1px solid var(--line); padding-left: 36px; }
+    .grid-2 > *:first-child { padding-right: 36px; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap: 0; }
+    .grid-3 > * + * { border-left: 1px solid var(--line); padding-left: 28px; }
+    .grid-3 > *:first-child { padding-right: 28px; }
+    .grid-3 > *:nth-child(2) { padding-right: 28px; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap: 0; }
+    .grid-4 > * + * { border-left: 1px solid var(--line); padding-left: 22px; }
+    .grid-4 > *:first-child,
+    .grid-4 > *:nth-child(2),
+    .grid-4 > *:nth-child(3) { padding-right: 22px; }
+
+    .grid-cards-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .grid-cards-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+    .grid-cards-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+
+    /* ── Sharp cards ── */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 24px 24px;
+      position: relative;
+    }
+    .panel.accent-amber { border-left: 2px solid var(--amber); }
+    .panel.accent-cyan  { border-left: 2px solid var(--cyan); }
+    .panel.accent-green { border-left: 2px solid var(--green); }
+    .panel.accent-red   { border-left: 2px solid var(--red); }
+    .panel.amber-bg     { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.25); }
+    .panel.cyan-bg      { background: rgba(34,211,238,0.05); border-color: rgba(34,211,238,0.22); }
+
+    .panel .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--amber);
+      margin-bottom: 12px; display: block;
+    }
+    .panel.accent-cyan .tag  { color: var(--cyan); }
+    .panel.accent-green .tag { color: var(--green); }
+    .panel.accent-red .tag   { color: var(--red); }
+
+    .panel .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--dim);
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+    .panel .meta strong { color: var(--ink); }
+
+    /* ── Status pills (terminal-style, rectangular) ── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 9px;
+      border: 1px solid currentColor;
+      line-height: 1;
+    }
+    .pill::before { content: '●'; font-size: 0.5rem; }
+    .pill.signed    { color: var(--green); }
+    .pill.committed { color: var(--amber); }
+    .pill.hot       { color: var(--red); }
+    .pill.submitted { color: var(--cyan); }
+    .pill.active    { color: var(--amber-2); }
+    .pill.emerging  { color: var(--muted); }
+
+    /* ── Big stats (mono, terminal) ── */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line-mid);
+      border-bottom: 1px solid var(--line-mid);
+      margin-top: 32px;
+    }
+    .stat {
+      padding: 22px 26px;
+      border-right: 1px solid var(--line);
+    }
+    .stat:last-child { border-right: none; }
+    .stat .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.6rem; font-weight: 600;
+      color: var(--ink); letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .stat .val .accent { color: var(--amber); }
+    .stat .lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--dim);
+      margin-top: 10px; display: block;
+    }
+    .stat .delta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--green);
+      margin-top: 6px; display: block;
+    }
+    .stat .delta.up::before { content: '▲ '; }
+    .stat .delta.flat { color: var(--amber); }
+    .stat .delta.flat::before { content: '◆ '; }
+
+    /* ── Asymmetric two-col with vertical rule ── */
+    .split-60-40 { display:grid; grid-template-columns: 1.5fr 1fr; gap: 0; }
+    .split-60-40 > * + * { border-left: 1px solid var(--line); padding-left: 36px; }
+    .split-60-40 > *:first-child { padding-right: 36px; }
+
+    /* ── Lists ── */
+    ul.list { list-style: none; }
+    ul.list li {
+      font-size: 0.92rem; color: var(--ink-soft);
+      padding: 6px 0 6px 18px;
+      position: relative;
+      line-height: 1.55;
+    }
+    ul.list li::before {
+      content: '/'; color: var(--amber);
+      position: absolute; left: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+    ul.list.cyan li::before { color: var(--cyan); }
+    ul.list.green li::before { color: var(--green); }
+    ul.list.dash li::before { content: '—'; color: var(--muted); }
+
+    /* ── Pipeline stage cols (issuance slide) ── */
+    .stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line-mid); margin-top: 6px; }
+    .stage {
+      border-right: 1px solid var(--line);
+      padding: 22px 22px 20px;
+      position: relative;
+    }
+    .stage:last-child { border-right: none; }
+    .stage::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .stage.signed::before    { background: var(--green); }
+    .stage.submitted::before { background: var(--cyan); }
+    .stage.active::before    { background: var(--amber); }
+    .stage.emerging::before  { background: var(--muted); }
+    .stage .stage-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+      display: block; margin-bottom: 10px;
+    }
+    .stage.signed    .stage-label { color: var(--green); }
+    .stage.submitted .stage-label { color: var(--cyan); }
+    .stage.active    .stage-label { color: var(--amber); }
+    .stage.emerging  .stage-label { color: var(--muted); }
+    .stage .stage-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem; font-weight: 600; color: var(--ink);
+      letter-spacing: -0.02em; line-height: 1; margin-bottom: 14px;
+    }
+    .stage ul.list li {
+      font-size: 0.92rem; color: var(--ink); padding: 4px 0 4px 16px;
+    }
+    .stage ul.list li::before { content: '·'; font-size: 1.2rem; line-height: 1; }
+    .stage .stage-note {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--muted);
+      margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line);
+      line-height: 1.5;
     }
 
-    /* Trend arrow box */
-    .trend-box {
-      display: flex; align-items: flex-start; gap: 14px;
-      padding: 18px 20px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: #fff;
+    /* ── Numbered item (for excursion product cards) ── */
+    .skubox {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 22px 22px 18px;
+      position: relative;
     }
-    .trend-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; font-weight: 700;
-      flex-shrink: 0;
+    .skubox.amber { border-color: rgba(245,158,11,0.25); background: rgba(245,158,11,0.04); }
+    .skubox.cyan  { border-color: rgba(34,211,238,0.22); background: rgba(34,211,238,0.04); }
+    .skubox .sku {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 10px;
     }
-    .trend-icon.warn { background: #FFFBEB; color: var(--amber); border: 1.5px solid #FDE68A; }
-    .trend-icon.good { background: #ECFDF5; color: var(--green); border: 1.5px solid #A7F3D0; }
-    .trend-icon.up   { background: var(--soft); color: var(--purple); border: 1.5px solid rgba(124,58,237,0.3); }
-    .trend-box h4 { margin-bottom: 4px; }
-    .trend-box p  { font-size: 0.85rem; }
-
-    .check-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .check-list li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 0.92rem; color: var(--muted);
+    .skubox.cyan .sku { color: var(--cyan); }
+    .skubox h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .skubox .buyer {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem; color: var(--muted);
+      margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line);
+      line-height: 1.5;
     }
-    .check-list li::before {
-      content: '✓'; color: var(--green); font-weight: 700;
-      flex-shrink: 0; margin-top: 1px;
-    }
-    .check-list.cyan li::before  { color: var(--cyan); }
-    .check-list.purple li::before { color: var(--purple); content: '→'; }
+    .skubox .buyer strong { color: var(--ink); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; }
 
-    hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-
-    .slide-dark { background: var(--text) !important; }
-    .slide-dark h1, .slide-dark h2, .slide-dark h3, .slide-dark h4 { color: #fff; }
-    .slide-dark p, .slide-dark .stat-label, .slide-dark .lead { color: rgba(255,255,255,0.65); }
-    .slide-dark .eyebrow { background: rgba(124,58,237,0.2); color: #C4B5FD; border-color: rgba(124,58,237,0.3); }
-    .slide-dark hr { border-color: rgba(255,255,255,0.08); }
-    .slide-dark .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
-    .slide-dark .card h3, .slide-dark .card h4 { color: #fff; }
-    .slide-dark .card p { color: rgba(255,255,255,0.6); }
-    .slide-dark .check-list li { color: rgba(255,255,255,0.75); }
-
-    .slide-tint { background: var(--bg-tint) !important; }
-
+    /* ── Bottom navigation chrome ── */
     nav.controls {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 72px;
-      border-top: 1px solid var(--border);
-      background: #fff; z-index: 10; flex-shrink: 0;
+      padding: 12px 56px;
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.3);
     }
-    .nav-brand { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; }
-    .nav-brand span { color: var(--purple); }
-    .slide-counter { font-size: 0.8rem; color: var(--dim); font-family: 'JetBrains Mono', monospace; }
-    .nav-btns { display:flex; gap:8px; }
+    .nav-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+    .nav-meta .num { color: var(--ink); }
+    .progress {
+      display: flex; gap: 4px; flex: 1; justify-content: center;
+    }
+    .pblock {
+      width: 26px; height: 4px; background: var(--line-mid);
+      cursor: pointer; transition: background .15s;
+    }
+    .pblock.active { background: var(--amber); }
+    .pblock:hover { background: var(--line-strong); }
+    .nav-btns { display:flex; gap: 6px; }
     .nav-btn {
-      padding: 6px 18px; border-radius: 8px;
-      font-size: 0.85rem; font-weight: 600;
-      cursor: pointer;
-      border: 1.5px solid var(--border);
-      background: #fff; color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
+      padding: 6px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.14em;
+      cursor: pointer; background: transparent;
+      border: 1px solid var(--line-mid);
+      color: var(--ink-soft);
       transition: all .15s;
     }
-    .nav-btn:hover { border-color: var(--purple); color: var(--purple); }
-    .nav-btn.primary { background: var(--purple); color: #fff; border-color: var(--purple); }
-    .nav-btn.primary:hover { background: var(--violet); }
-
-    .dots { display: flex; gap: 6px; align-items: center; }
-    .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--border); cursor: pointer;
-      transition: all .2s;
-    }
-    .dot.active { background: var(--purple); width: 18px; border-radius: 3px; }
-
-    .slide-header { margin-bottom: 28px; }
-
-    .bg-blob {
-      position: absolute; border-radius: 50%;
-      pointer-events: none; z-index: 0;
-    }
-    .slide > * { position: relative; z-index: 1; }
+    .nav-btn:hover { border-color: var(--amber); color: var(--amber); }
+    .nav-btn.primary { background: var(--amber); color: var(--bg); border-color: var(--amber); font-weight: 600; }
+    .nav-btn.primary:hover { background: var(--amber-2); border-color: var(--amber-2); color: var(--bg); }
 
     .key-hint {
-      position: fixed; bottom: 56px; right: 24px;
-      font-size: 0.7rem; color: var(--dim);
+      position: fixed; bottom: 64px; right: 24px;
       font-family: 'JetBrains Mono', monospace;
-      opacity: 0.6;
+      font-size: 0.68rem; color: var(--dim);
+      letter-spacing: 0.1em; opacity: 0.7;
     }
 
-    .badge-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    /* Slide-1 cover special */
+    .cover {
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .cover .head {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; letter-spacing: 0.22em;
+      color: var(--muted); margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .cover .head .accent { color: var(--amber); }
+
+    /* Slide section headers (consistent) */
+    .slide-head { margin-bottom: 28px; }
+    .slide-head h2 { max-width: 940px; }
+    .slide-head .sub {
+      font-size: 1rem; color: var(--muted); margin-top: 10px;
+      max-width: 900px;
+    }
+
+    /* Pull-quote / closer */
+    .closer {
+      background: rgba(245,158,11,0.05);
+      border-left: 3px solid var(--amber);
+      padding: 22px 26px;
+      margin-top: 24px;
+      max-width: 1180px;
+    }
+    .closer p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem; line-height: 1.5;
+      color: var(--ink);
+    }
+    .closer p strong {
+      font-style: normal; font-family: 'Inter', sans-serif;
+      color: var(--amber-2); font-weight: 600;
+    }
+
+    /* Numbered outlook cards */
+    .nodebox {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 20px 22px;
+      position: relative;
+    }
+    .nodebox .nidx {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.18em; color: var(--amber);
+      display: block; margin-bottom: 6px;
+    }
+    .nodebox h3 { font-size: 1.15rem; margin-bottom: 6px; }
+
+    /* Spotlight slide */
+    .spotlight {
+      background: linear-gradient(135deg, rgba(245,158,11,0.08), transparent 60%);
+      border: 1px solid var(--line);
+      padding: 32px 36px;
+      max-width: 1180px;
+    }
+
   </style>
 </head>
 <body>
 
 <div class="deck">
+
+  <!-- ── Top status bar ── -->
+  <div class="topbar">
+    <span class="brand">ANDUIN<span class="dot">//</span>INVESTOR UPDATE</span>
+    <span class="stamp"><span class="live">LIVE</span>JUNE 2026 · CONFIDENTIAL</span>
+  </div>
+
   <div class="slides" id="slides">
 
     <!-- ══════════════════════════════════════════════════════ -->
     <!-- SLIDE 1: COVER                                          -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide active" id="slide-1">
-      <div class="bg-blob" style="width:600px;height:600px;top:-200px;right:-100px;background:radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 70%);"></div>
-      <div class="bg-blob" style="width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(14,165,233,0.06) 0%,transparent 70%);"></div>
-
-      <div style="max-width:920px;">
-        <div class="eyebrow">Confidential · Investor Update · June 2026</div>
-        <h1 style="margin-bottom:20px;">Anduin —<br><span class="grad-text">Status Quo.</span></h1>
-        <p class="lead" style="max-width:680px;margin-bottom:36px;">
-          What the market is buying, what we're shipping, and where every named deal across lending and issuance actually stands.
+      <div class="cover">
+        <span class="head">Filed <span class="accent">06.05.2026</span> · Status report · Q2 2026</span>
+        <h1>Status <em>quo.</em></h1>
+        <p class="lead" style="margin-top:28px;">
+          What the market is buying. What we're shipping. Where every named deal across lending and issuance actually stands — written down, without spin.
         </p>
 
-        <div class="big-nums" style="max-width:820px;">
-          <div class="big-num">
-            <span class="stat-val">4</span>
-            <span class="stat-label">Secured Deals</span>
+        <div class="stat-row" style="max-width:1080px;">
+          <div class="stat">
+            <span class="val"><span class="accent">04</span></span>
+            <span class="lbl">Secured</span>
+            <span class="delta up">vs 0 last quarter</span>
           </div>
-          <div class="big-num">
-            <span class="stat-val">12+</span>
-            <span class="stat-label">Active Conversations</span>
+          <div class="stat">
+            <span class="val">12<span class="accent">+</span></span>
+            <span class="lbl">Active</span>
+            <span class="delta up">widening</span>
           </div>
-          <div class="big-num">
-            <span class="stat-val">1</span>
-            <span class="stat-label">Strategic Anchor</span>
+          <div class="stat">
+            <span class="val">01</span>
+            <span class="lbl">Strategic anchor</span>
+            <span class="delta up">Stellar · inbound</span>
           </div>
-          <div class="big-num">
-            <span class="stat-val">↑</span>
-            <span class="stat-label">Build Velocity</span>
+          <div class="stat">
+            <span class="val"><span class="accent">▲</span></span>
+            <span class="lbl">Build velocity</span>
+            <span class="delta up">AI-compounded</span>
           </div>
         </div>
       </div>
@@ -299,166 +477,155 @@
     <!-- SLIDE 2: MARKET STATE                                   -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-2">
-      <div class="slide-header">
-        <div class="eyebrow">Market state</div>
-        <h2>Two demands, <span class="grad-text">one product family.</span></h2>
+      <div class="slide-head">
+        <span class="label">Market state · 01 of 12</span>
+        <h2>Two demands. <em>One product family.</em></h2>
       </div>
 
-      <div class="grid-2" style="max-width:1120px;gap:24px;">
-        <div class="card purple">
-          <span class="card-tag">Demand 1 — away from</span>
-          <h3 style="margin-bottom:10px;">Spot and high-leverage perps are losing the marginal user.</h3>
-          <p style="margin-bottom:12px;">Retail and prosumer flows are migrating toward instruments with defined risk: capped downside, transparent payoff, regulated wrapper.</p>
-          <hr>
-          <span class="card-tag" style="margin-top:4px;">Anduin answers with</span>
-          <h4 style="margin-bottom:6px;">KO Certificates · Securitized Perpetuals</h4>
+      <div class="grid-2" style="max-width:1280px;">
+        <div>
+          <span class="label">Demand 01 — away from</span>
+          <h3 style="margin-bottom:14px;">Spot and high-leverage perps are losing the marginal user.</h3>
+          <p>Retail and prosumer flows are migrating toward instruments with defined risk: capped downside, transparent payoff, regulated wrapper.</p>
+          <hr class="rule amber">
+          <span class="mono" style="font-size:0.74rem;color:var(--amber);letter-spacing:0.14em;text-transform:uppercase;">Anduin answers with</span>
+          <h4 style="margin-top:8px;margin-bottom:6px;">KO Certificates · Securitised Perpetuals</h4>
           <p style="font-size:0.9rem;">Token-wrapped, capital-protected leverage. The perp economics, the certificate's regulatory clarity, on-chain rails.</p>
         </div>
 
-        <div class="card cyan">
-          <span class="card-tag">Demand 2 — toward</span>
-          <h3 style="margin-bottom:10px;">Yield with downside protection.</h3>
-          <p style="margin-bottom:12px;">Treasury allocators, exchanges with idle stablecoin balances, and prosumer wealth segments all asking the same question — where does conservative on-chain yield live?</p>
-          <hr>
-          <span class="card-tag" style="margin-top:4px;color:#0891B2;">Anduin answers with</span>
-          <h4 style="margin-bottom:6px;">tMMF · Structured Yield · Capital-Protected Notes</h4>
-          <p style="font-size:0.9rem;">Tokenized money-market exposure, structured yield products, principal-protected notes — under Anduin issuance, same product family the DLT deck already validated with counterparties.</p>
+        <div>
+          <span class="label cyan">Demand 02 — toward</span>
+          <h3 style="margin-bottom:14px;">Yield with downside protection.</h3>
+          <p>Treasury allocators, exchanges with idle stablecoin balances, and prosumer wealth segments are all asking the same question — where does conservative on-chain yield live?</p>
+          <hr class="rule" style="background:var(--cyan);height:2px;margin:14px 0;">
+          <span class="mono" style="font-size:0.74rem;color:var(--cyan);letter-spacing:0.14em;text-transform:uppercase;">Anduin answers with</span>
+          <h4 style="margin-top:8px;margin-bottom:6px;">tMMF · Structured Yield · Capital-Protected Notes</h4>
+          <p style="font-size:0.9rem;">Tokenised money-market exposure, structured yield products, principal-protected notes — the same family the DLT conversations already validated.</p>
         </div>
       </div>
 
-      <p style="margin-top:24px;max-width:1120px;font-size:0.92rem;">
-        <strong style="color:var(--text);">Both demands collapse into the same architecture:</strong> Anduin issues a regulated token, the counterparty distributes, the on-chain plumbing is shared. One stack, two product lines, every conversation in the pipeline below maps to one or both.
-      </p>
+      <div class="closer">
+        <p><strong>Both demands collapse into the same architecture.</strong> Anduin issues a regulated token, the counterparty distributes, the on-chain plumbing is shared. One stack, two product lines — every conversation in the pipeline maps to one or both.</p>
+      </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 3: PRODUCT EXCURSION 1 — LEVERAGE, REGULATED      -->
+    <!-- SLIDE 3: PRODUCT EXCURSION 1 — LEVERAGE                 -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide" id="slide-3">
-      <div class="slide-header">
-        <div class="eyebrow">Product excursion · 1 of 3 · Leveraged exposure</div>
-        <h2>Spot & high-leverage replacements, <span class="grad-text">as securities.</span></h2>
+      <div class="slide-head">
+        <span class="label">Excursion · 01 of 03 · Leveraged exposure</span>
+        <h2>Spot &amp; high-leverage replacements, <em>as securities.</em></h2>
+        <p class="sub">ESMA product intervention on leverage applies to CFDs — <strong>not</strong> to these instruments structured as securities. That's the regulatory door we walk through; the product variety is what we put behind it.</p>
       </div>
 
-      <p style="max-width:1120px;font-size:0.95rem;margin-bottom:18px;">
-        ESMA product intervention on leverage applies to CFDs — <strong style="color:var(--text);">not</strong> to these instruments structured as securities. That's the regulatory door we walk through; the product variety is what we put behind it.
-      </p>
-
-      <div class="grid-2" style="max-width:1120px;gap:14px;">
-        <div class="card">
-          <span class="card-tag">KO Certificate</span>
-          <h3 style="margin-bottom:6px;">Knock-out Certificate</h3>
-          <p style="font-size:0.9rem;">Long/short with an automatic knock-out barrier — liquidates cleanly when the underlying breaches a maintenance-margin equivalent. No margin call, no negative balance.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Sells because:</strong> the perp's leverage, the certificate's regulatory clarity.</p>
+      <div class="grid-cards-2" style="max-width:1280px;">
+        <div class="skubox amber">
+          <span class="sku">SKU · KO-CERT</span>
+          <h3>Knock-out Certificate</h3>
+          <p style="font-size:0.92rem;">Long/short with an automatic knock-out barrier — liquidates cleanly when the underlying breaches a maintenance-margin equivalent. No margin call, no negative balance.</p>
+          <div class="buyer"><strong>Why it sells</strong><br>The perp's leverage, the certificate's regulatory clarity.</div>
         </div>
 
-        <div class="card purple">
-          <span class="card-tag">Factor Certificate</span>
-          <h3 style="margin-bottom:6px;">Factor Certificate · 2× / 3× / 5×</h3>
-          <p style="font-size:0.9rem;">Daily-reset fixed-leverage exposure. NAV compounds daily — mathematically the securitised perpetual: replicates perp funding mechanics inside a security wrapper.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Sells because:</strong> retail-friendly perp economics, no funding-rate volatility surprises.</p>
+        <div class="skubox amber">
+          <span class="sku">SKU · FACTOR</span>
+          <h3>Factor Certificate · 2× / 3× / 5×</h3>
+          <p style="font-size:0.92rem;">Daily-reset fixed-leverage exposure. NAV compounds daily — mathematically the securitised perpetual: replicates perp funding mechanics inside a security wrapper.</p>
+          <div class="buyer"><strong>Why it sells</strong><br>Retail-friendly perp economics with no funding-rate surprises.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">Turbo Certificate</span>
-          <h3 style="margin-bottom:6px;">Turbo Certificate</h3>
-          <p style="font-size:0.9rem;">KO variant with a fixed expiry (1–12 months) and rolling funding cost. Known maturity, known cost, defined risk.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Sells because:</strong> retail prefers a finite horizon to a continuously-funded position.</p>
+        <div class="skubox amber">
+          <span class="sku">SKU · TURBO</span>
+          <h3>Turbo Certificate</h3>
+          <p style="font-size:0.92rem;">KO variant with a fixed expiry (1–12 months) and rolling funding cost. Known maturity, known cost, defined risk.</p>
+          <div class="buyer"><strong>Why it sells</strong><br>Retail prefers a finite horizon to a continuously-funded position.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">Mini Future</span>
-          <h3 style="margin-bottom:6px;">Mini Future</h3>
-          <p style="font-size:0.9rem;">No knock-out barrier, continuous funding, perpetual maturity. The closest direct analog to a crypto perpetual — but issued as a regulated security.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Sells because:</strong> traders who want the perp shape without the unregulated venue.</p>
+        <div class="skubox amber">
+          <span class="sku">SKU · MINI</span>
+          <h3>Mini Future</h3>
+          <p style="font-size:0.92rem;">No knock-out barrier, continuous funding, perpetual maturity. The closest direct analog to a crypto perpetual — but issued as a regulated security.</p>
+          <div class="buyer"><strong>Why it sells</strong><br>Traders who want the perp shape without the unregulated venue.</div>
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 4: PRODUCT EXCURSION 2 — YIELD & PROTECTION       -->
+    <!-- SLIDE 4: PRODUCT EXCURSION 2 — YIELD                    -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-4">
-      <div class="slide-header">
-        <div class="eyebrow">Product excursion · 2 of 3 · Yield with protection</div>
-        <h2>Yield, downside-aware, <span class="grad-text">tokenized.</span></h2>
+      <div class="slide-head">
+        <span class="label cyan">Excursion · 02 of 03 · Yield with protection</span>
+        <h2>Yield, downside-aware, <em class="em-cyan">tokenised.</em></h2>
+        <p class="sub">Treasury allocators, exchange balance sheets, and prosumer wealth segments are all asking the same question: where does conservative on-chain yield live? These are the answers.</p>
       </div>
 
-      <p style="max-width:1120px;font-size:0.95rem;margin-bottom:18px;">
-        Treasury allocators, exchange balance sheets, and prosumer wealth segments are all asking the same question: where does conservative on-chain yield live? These are the answers.
-      </p>
-
-      <div class="grid-2" style="max-width:1120px;gap:14px;">
-        <div class="card cyan">
-          <span class="card-tag" style="color:#0891B2;">Principal Protected Note</span>
-          <h3 style="margin-bottom:6px;">Principal Protected Note (PPN)</h3>
-          <p style="font-size:0.9rem;">Capital back at maturity with upside participation in an underlying — the conservative cash alternative for risk-averse capital.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> treasury, family office, idle stablecoin balances looking for non-zero yield with a hard floor.</p>
+      <div class="grid-cards-2" style="max-width:1280px;">
+        <div class="skubox cyan">
+          <span class="sku">SKU · PPN</span>
+          <h3>Principal Protected Note</h3>
+          <p style="font-size:0.92rem;">Capital back at maturity with upside participation in an underlying — the conservative cash alternative for risk-averse capital.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Treasury, family office, idle stablecoin balances seeking non-zero yield with a hard floor.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">BRC · Reverse Convertible</span>
-          <h3 style="margin-bottom:6px;">Barrier Reverse Convertible (BRC)</h3>
-          <p style="font-size:0.9rem;">Enhanced coupon now, full repayment at maturity unless the underlying breaches the barrier — in which case you receive the asset. Classic European structured yield product.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> investors with a view that the underlying trades sideways or modestly up. High coupon is the hook.</p>
+        <div class="skubox cyan">
+          <span class="sku">SKU · BRC</span>
+          <h3>Barrier Reverse Convertible</h3>
+          <p style="font-size:0.92rem;">Enhanced coupon now, full repayment at maturity unless the underlying breaches the barrier — in which case you receive the asset. Classic European structured yield product.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Investors with a view that the underlying trades sideways or modestly up. High coupon is the hook.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">Bonus Certificate</span>
-          <h3 style="margin-bottom:6px;">Bonus Certificate</h3>
-          <p style="font-size:0.9rem;">Pay a conditional bonus (e.g. +15%) at maturity if the underlying never touches the barrier during the term. Otherwise standard exposure.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> long-the-underlying investors who want a yield kicker on the path-dependent risk.</p>
+        <div class="skubox cyan">
+          <span class="sku">SKU · BONUS</span>
+          <h3>Bonus Certificate</h3>
+          <p style="font-size:0.92rem;">Pay a conditional bonus (e.g. +15%) at maturity if the underlying never touches the barrier during the term. Otherwise, standard exposure.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Long-the-underlying investors who want a yield kicker on path-dependent risk.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">Covered Call Note</span>
-          <h3 style="margin-bottom:6px;">Covered Call Strategy Note</h3>
-          <p style="font-size:0.9rem;">Yield-enhanced exposure to an underlying with the upside capped at a strike. Packages a systematic options strategy into a single token.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> holders of the underlying who would otherwise overwrite manually — now passive.</p>
+        <div class="skubox cyan">
+          <span class="sku">SKU · CC-NOTE</span>
+          <h3>Covered Call Note</h3>
+          <p style="font-size:0.92rem;">Yield-enhanced exposure to an underlying with upside capped at a strike. Packages a systematic options strategy into a single token.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Holders of the underlying who would otherwise overwrite manually — now passive.</div>
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 5: PRODUCT EXCURSION 3 — RELATIVE VALUE & EXOTIC  -->
+    <!-- SLIDE 5: PRODUCT EXCURSION 3 — EXOTIC                   -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide" id="slide-5">
-      <div class="slide-header">
-        <div class="eyebrow">Product excursion · 3 of 3 · Relative value & exotic</div>
-        <h2>Sophisticated payoffs, <span class="grad-text">on-chain.</span></h2>
+      <div class="slide-head">
+        <span class="label">Excursion · 03 of 03 · Relative value &amp; exotic</span>
+        <h2>Sophisticated payoffs, <em>on-chain.</em></h2>
+        <p class="sub">Beyond the headline leverage and yield products, the same issuance stack supports relative-value and path-dependent payoffs the on-chain world doesn't yet have. Each one is a new SKU on the same rails.</p>
       </div>
 
-      <p style="max-width:1120px;font-size:0.95rem;margin-bottom:18px;">
-        Beyond the headline leverage and yield products, the same issuance stack supports relative-value and path-dependent payoffs the on-chain world doesn't yet have. Each one is a new SKU on the same rails.
-      </p>
-
-      <div class="grid-3" style="max-width:1140px;gap:14px;">
-        <div class="card purple">
-          <span class="card-tag">Outperformance Certificate</span>
-          <h3 style="margin-bottom:6px;">Outperformance Certificate</h3>
-          <p style="font-size:0.9rem;">Pays the spread of one underlying versus a benchmark — BTC vs ETH, BTC vs Gold, BTC vs SPX. Pure cross-asset relative-value trade in a single instrument.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> macro views without leg-by-leg execution.</p>
+      <div class="grid-cards-3" style="max-width:1280px;">
+        <div class="skubox amber">
+          <span class="sku">SKU · OUTPERF</span>
+          <h3>Outperformance Certificate</h3>
+          <p style="font-size:0.92rem;">Pays the spread of one underlying versus a benchmark — BTC vs ETH, BTC vs Gold, BTC vs SPX. Pure cross-asset relative-value trade.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Macro views without leg-by-leg execution.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">Shark Fin</span>
-          <h3 style="margin-bottom:6px;">Shark Fin</h3>
-          <p style="font-size:0.9rem;">Double-barrier KO with a multiplier set so payoff ≈ 1 / P(in range). High leverage on a range-bound view; zero payoff outside.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> investors with a specific view on realised volatility / range.</p>
+        <div class="skubox amber">
+          <span class="sku">SKU · SHARK</span>
+          <h3>Shark Fin</h3>
+          <p style="font-size:0.92rem;">Double-barrier KO with a multiplier set so payoff ≈ 1 / P(in range). High leverage on a range-bound view; zero payoff outside.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Investors with a specific view on realised volatility / range.</div>
         </div>
 
-        <div class="card">
-          <span class="card-tag">Carry Trade Note</span>
-          <h3 style="margin-bottom:6px;">Carry Trade Note</h3>
-          <p style="font-size:0.9rem;">Packages crypto funding-rate / basis exposure into a single token. Yield derived from market microstructure, not directional risk.</p>
-          <p style="font-size:0.85rem;margin-top:6px;"><strong style="color:var(--text);">Buyer:</strong> institutional allocators wanting carry without operating the trade.</p>
+        <div class="skubox amber">
+          <span class="sku">SKU · CARRY</span>
+          <h3>Carry Trade Note</h3>
+          <p style="font-size:0.92rem;">Packages crypto funding-rate / basis exposure into a single token. Yield derived from market microstructure, not directional risk.</p>
+          <div class="buyer"><strong>Buyer</strong><br>Institutional allocators wanting carry without operating the trade.</div>
         </div>
       </div>
 
-      <div class="card dark" style="margin-top:22px;max-width:1140px;">
-        <p style="color:rgba(255,255,255,0.85);font-size:0.98rem;line-height:1.55;">
-          <strong style="color:#fff;">End of excursion.</strong> Every product on the last three slides shares one architecture: Liechtenstein-issued security token, distributed OTC through licensed brokers, settled and serviced on Anduin rails. New SKUs cost weeks of engineering, not quarters — which is why the pipeline keeps widening without the build cost compounding.
-        </p>
+      <div class="closer">
+        <p><strong>End of excursion.</strong> Every product on the last three slides shares one architecture — Liechtenstein-issued security token, distributed OTC through licensed brokers, settled and serviced on Anduin rails. New SKUs cost weeks of engineering, not quarters.</p>
       </div>
     </div>
 
@@ -466,40 +633,31 @@
     <!-- SLIDE 6: ANDUIN LENDING PIPELINE                        -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-6">
-      <div class="slide-header">
-        <div class="eyebrow">Anduin Lending · Pipeline</div>
-        <h2>Revolut committed — moving slowly.<br><span class="grad-text">Bitvavo running hot.</span></h2>
+      <div class="slide-head">
+        <span class="label">Anduin Lending · Pipeline</span>
+        <h2>Revolut <em>committed</em> — moving slowly.<br>Bitvavo <em>running hot.</em></h2>
       </div>
 
-      <div class="grid-3" style="max-width:1140px;">
-        <div class="card amber">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span class="pill submitted" style="background:#FFFBEB;color:#B45309;border-color:#FDE68A;">COMMITTED</span>
-          </div>
-          <h3 style="margin-bottom:8px;">Revolut</h3>
-          <p style="font-size:0.9rem;">Still committed — the relationship and the technical case are intact. IPO preparation is absorbing leadership bandwidth, so lending is not their 2026 focus topic and the go-live date has been pushed back.</p>
-          <hr>
-          <p style="font-size:0.85rem;"><strong style="color:var(--text);">Read:</strong> moving slowly, not moving away. Keep the relationship warm; re-engage on cadence post-IPO. No bandwidth pressure on our side.</p>
+      <div class="grid-cards-3" style="max-width:1320px;">
+        <div class="panel accent-amber">
+          <span class="pill committed">Committed</span>
+          <h3 style="margin-top:16px;margin-bottom:10px;">Revolut</h3>
+          <p style="font-size:0.92rem;">Still committed — the relationship and the technical case are intact. IPO preparation is absorbing leadership bandwidth, so lending is not their 2026 focus topic and the go-live date has been pushed back.</p>
+          <div class="meta"><strong>Read:</strong> moving slowly, not moving away. Keep the relationship warm; re-engage on cadence post-IPO. No bandwidth pressure on our side.</div>
         </div>
 
-        <div class="card" style="border-color:#FECACA;background:#FEF2F2;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span class="pill hot">HOT</span>
-          </div>
-          <h3 style="margin-bottom:8px;">Bitvavo</h3>
-          <p style="font-size:0.9rem;">Live, fast-moving conversation on margin trading. Bitvavo is the Tier-1 EU venue most explicit about wanting to add leveraged products with proper risk plumbing — and the hottest live deal in the lending book.</p>
-          <hr>
-          <p style="font-size:0.85rem;"><strong style="color:var(--text);">Read:</strong> convertible to LOI this quarter. Our most actionable lending opportunity right now.</p>
+        <div class="panel accent-red">
+          <span class="pill hot">Hot</span>
+          <h3 style="margin-top:16px;margin-bottom:10px;">Bitvavo</h3>
+          <p style="font-size:0.92rem;">Live, fast-moving conversation on margin trading. Bitvavo is the Tier-1 EU venue most explicit about wanting to add leveraged products with proper risk plumbing — and the hottest live deal in the lending book.</p>
+          <div class="meta"><strong>Read:</strong> convertible to LOI this quarter. Our most actionable lending opportunity right now.</div>
         </div>
 
-        <div class="card">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span class="pill active">CFD CHANNEL</span>
-          </div>
-          <h3 style="margin-bottom:8px;">Libertex · CMC · XTB</h3>
-          <p style="font-size:0.9rem;">Three established CFD brokers in pipeline. Lending is the natural cross-sell: each is margin-heavy, MIFID-constrained, and looking for capital-efficient collateral infrastructure.</p>
-          <hr>
-          <p style="font-size:0.85rem;"><strong style="color:var(--text);">Read:</strong> a channel, not a one-shot. Winning one likely shortens cycle on the next two.</p>
+        <div class="panel accent-cyan">
+          <span class="pill active">CFD Channel</span>
+          <h3 style="margin-top:16px;margin-bottom:10px;">Libertex · CMC · XTB</h3>
+          <p style="font-size:0.92rem;">Three established CFD brokers in pipeline. Lending is the natural cross-sell: each is margin-heavy, MIFID-constrained, and looking for capital-efficient collateral infrastructure.</p>
+          <div class="meta"><strong>Read:</strong> a channel, not a one-shot. Winning one likely shortens cycle on the next two.</div>
         </div>
       </div>
     </div>
@@ -508,102 +666,98 @@
     <!-- SLIDE 7: ISSUANCE PIPELINE                              -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide" id="slide-7">
-      <div class="slide-header">
-        <div class="eyebrow">Issuance · Pipeline</div>
-        <h2>Three signed. <span class="grad-text">Twelve more moving up the funnel.</span></h2>
+      <div class="slide-head">
+        <span class="label">Issuance · Pipeline</span>
+        <h2>Three <em>signed.</em> Twelve more moving up the funnel.</h2>
       </div>
 
-      <div class="stage-grid" style="max-width:1180px;">
+      <div class="stages" style="max-width:1320px;">
         <div class="stage signed">
           <span class="stage-label">● Signed · via DLT</span>
-          <div class="stage-count">3</div>
-          <ul>
-            <li><strong>Nexo</strong></li>
-            <li><strong>BitMEX</strong></li>
-            <li><strong>Bit2me</strong></li>
+          <div class="stage-count">03</div>
+          <ul class="list green">
+            <li><strong style="color:var(--ink);">Nexo</strong></li>
+            <li><strong style="color:var(--ink);">BitMEX</strong></li>
+            <li><strong style="color:var(--ink);">Bit2me</strong></li>
           </ul>
-          <p style="font-size:0.78rem;margin-top:10px;color:#059669;">Secured for Anduin via DLT relationship.</p>
+          <div class="stage-note">Secured for Anduin via the DLT distribution relationship.</div>
         </div>
 
         <div class="stage submitted">
-          <span class="stage-label">→ Submitted Offer</span>
-          <div class="stage-count">1</div>
-          <ul>
-            <li><strong>MEXC</strong></li>
+          <span class="stage-label">→ Submitted offer</span>
+          <div class="stage-count">01</div>
+          <ul class="list cyan">
+            <li><strong style="color:var(--ink);">MEXC</strong></li>
           </ul>
-          <p style="font-size:0.78rem;margin-top:10px;color:#0891B2;">Proposal on the table; awaiting countersignal.</p>
+          <div class="stage-note">Proposal on the table; awaiting countersignal.</div>
         </div>
 
         <div class="stage active">
-          <span class="stage-label">↗ Actively Moving</span>
-          <div class="stage-count">4</div>
-          <ul>
+          <span class="stage-label">↗ Actively moving</span>
+          <div class="stage-count">04</div>
+          <ul class="list">
             <li>Bybit</li>
             <li>Bitget</li>
             <li>1inch</li>
             <li>Bitpanda</li>
           </ul>
-          <p style="font-size:0.78rem;margin-top:10px;color:var(--purple);">Multiple touchpoints, climbing the funnel.</p>
+          <div class="stage-note">Multiple touchpoints, climbing the funnel.</div>
         </div>
 
         <div class="stage emerging">
           <span class="stage-label">· Emerging</span>
-          <div class="stage-count">3</div>
-          <ul>
+          <div class="stage-count">03</div>
+          <ul class="list dash">
             <li>Vancelian</li>
             <li>Coinhouse</li>
             <li>Young Platform</li>
           </ul>
-          <p style="font-size:0.78rem;margin-top:10px;color:var(--muted);">Smaller venues — fast cycles, useful flow.</p>
+          <div class="stage-note">Smaller venues — fast cycles, useful flow.</div>
         </div>
       </div>
 
-      <div class="card dark" style="margin-top:22px;max-width:1180px;">
-        <p style="color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.55;">
-          <strong style="color:#fff;">What changed this quarter:</strong> the issuance pipeline transformed from prospecting to execution. Three signed via the DLT distribution relationship convert directly into Anduin revenue. MEXC is days, not quarters, from response. The four "actively moving" names each have a champion inside the counterparty.
-        </p>
+      <div class="closer">
+        <p><strong>What changed this quarter.</strong> The issuance pipeline transformed from prospecting to execution. Three signed via DLT convert directly into Anduin revenue. MEXC is days, not quarters, from response. The four "actively moving" names each have a champion inside the counterparty.</p>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 8: STELLAR FOUNDATION SPOTLIGHT                   -->
+    <!-- SLIDE 8: STELLAR FOUNDATION                             -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide slide-dark" id="slide-8">
-      <div class="bg-blob" style="width:500px;height:500px;top:-150px;right:-50px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);"></div>
-
-      <div class="slide-header">
-        <div class="eyebrow">Strategic anchor</div>
-        <h2>Stellar Foundation —<br><span class="grad-text">Anduin as issuer for the chain.</span></h2>
+    <div class="slide slide-warm" id="slide-8">
+      <div class="slide-head">
+        <span class="label">Strategic anchor · spotlight</span>
+        <h2>Stellar Foundation —<br><em>Anduin as issuer for the chain.</em></h2>
       </div>
 
-      <div class="grid-2" style="max-width:1140px;gap:28px;align-items:start;">
+      <div class="split-60-40" style="max-width:1280px;">
         <div>
-          <div class="card" style="margin-bottom:14px;">
-            <span class="card-tag" style="color:#C4B5FD;">The ask</span>
-            <h3 style="margin-bottom:10px;color:#fff;">Tokenize all assets on the Stellar chain — with Anduin as issuer.</h3>
+          <div class="panel accent-amber" style="margin-bottom:18px;">
+            <span class="tag">The ask</span>
+            <h3 style="margin-bottom:10px;">Tokenise all assets on the Stellar chain — with Anduin as issuer.</h3>
             <p>Stellar Foundation has approached Anduin to be the issuance partner for assets brought on-chain into the Stellar ecosystem. This is a chain-level anchor relationship, not a one-product deal.</p>
           </div>
 
-          <div class="card">
-            <span class="card-tag" style="color:#C4B5FD;">The distribution layer</span>
-            <h4 style="color:#fff;font-size:1.05rem;margin-bottom:6px;">Bitpanda allocation already purchased.</h4>
-            <p>Stellar Foundation has acquired an allocation at Bitpanda specifically to distribute tokenized money-market and yield products — products Anduin will issue and fill on the supply side.</p>
+          <div class="panel accent-amber">
+            <span class="tag">The distribution layer</span>
+            <h4 style="margin-bottom:6px;">Bitpanda allocation already purchased.</h4>
+            <p>Stellar Foundation has acquired an allocation at Bitpanda specifically to distribute tokenised money-market and yield products — products Anduin will issue and fill on the supply side.</p>
           </div>
         </div>
 
         <div>
-          <div class="card" style="margin-bottom:14px;background:rgba(124,58,237,0.15);border-color:rgba(124,58,237,0.3);">
-            <span class="card-tag" style="color:#C4B5FD;">Why this matters</span>
-            <ul class="check-list purple" style="margin-top:6px;">
-              <li style="color:rgba(255,255,255,0.9);">Chain-level relationship, not point-deal — every future Stellar tokenization touches us.</li>
-              <li style="color:rgba(255,255,255,0.9);">Distribution rail (Bitpanda) is already paid for and committed.</li>
-              <li style="color:rgba(255,255,255,0.9);">Product fit is the same family already developed for the issuance pipeline.</li>
-              <li style="color:rgba(255,255,255,0.9);">First proof that Anduin's positioning as neutral issuance infrastructure attracts foundation-tier counterparties.</li>
+          <div class="panel amber-bg" style="margin-bottom:18px;">
+            <span class="tag">Why this matters</span>
+            <ul class="list" style="margin-top:6px;">
+              <li>Chain-level relationship, not point deal — every future Stellar tokenisation touches us.</li>
+              <li>Distribution rail (Bitpanda) is already paid for and committed.</li>
+              <li>Product fit matches the issuance pipeline architecture already in place.</li>
+              <li>First proof that Anduin's positioning as neutral issuance infrastructure attracts foundation-tier counterparties.</li>
             </ul>
           </div>
 
-          <div class="card">
-            <span class="card-tag" style="color:#C4B5FD;">Status</span>
+          <div class="panel">
+            <span class="tag">Status</span>
             <p>Conversation live. Engagement scope under structuring. We expect this to be the highest-leverage relationship in the issuance book by year-end.</p>
           </div>
         </div>
@@ -614,26 +768,27 @@
     <!-- SLIDE 9: PIPELINE REALITY                               -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-9">
-      <div class="slide-header">
-        <div class="eyebrow">Pipeline reality</div>
-        <h2>Slower than we'd hoped — <span class="grad-text">but never going backwards.</span></h2>
+      <div class="slide-head">
+        <span class="label">Pipeline reality</span>
+        <h2>Slower than we'd hoped — <em>but never going backwards.</em></h2>
       </div>
 
-      <div class="grid-2" style="max-width:1120px;gap:24px;">
-        <div class="card">
-          <span class="card-tag">What's true</span>
-          <h3 style="margin-bottom:12px;">Every cycle is taking longer than our base case.</h3>
-          <ul class="check-list" style="margin-top:6px;">
+      <div class="grid-2" style="max-width:1280px;">
+        <div>
+          <span class="label muted">What's true</span>
+          <h3 style="margin-bottom:14px;">Every cycle is taking longer than our base case.</h3>
+          <ul class="list dash" style="margin-top:8px;">
             <li>Regulated counterparties run quarter-long internal cycles, not week-long ones.</li>
             <li>Decisions need legal, risk, and exec sign-off in parallel.</li>
             <li>Commitments take months to convert into integrated, live flow.</li>
             <li>Honest framing: against the timeline we showed twelve months ago, we are behind.</li>
           </ul>
         </div>
-        <div class="card purple">
-          <span class="card-tag">What's also true</span>
-          <h3 style="margin-bottom:12px;">Movement is one-directional — toward us.</h3>
-          <ul class="check-list" style="margin-top:6px;">
+
+        <div>
+          <span class="label">What's also true</span>
+          <h3 style="margin-bottom:14px;">Movement is one-directional — <em>toward us.</em></h3>
+          <ul class="list" style="margin-top:8px;">
             <li>Issuance pipeline went from zero signed to three signed this quarter.</li>
             <li>Stellar Foundation chose us — inbound, foundation-tier.</li>
             <li>Bitvavo emerged as a hot, fast-moving lending opportunity alongside the committed Revolut conversation.</li>
@@ -642,50 +797,48 @@
         </div>
       </div>
 
-      <div class="card dark" style="margin-top:22px;max-width:1120px;">
-        <p style="color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.55;">
-          <strong style="color:#fff;">The honest read:</strong> measured against the original timeline, we're behind. Measured against where regulated-finance B2B sales actually clears — multiple signed anchors, a widening Tier 1, a foundation-tier inbound, and zero churn — we are early on a curve that's now legibly going up and to the right.
-        </p>
+      <div class="closer">
+        <p><strong>The honest read.</strong> Measured against the original timeline, we're behind. Measured against where regulated-finance B2B sales actually clears — multiple signed anchors, a widening Tier 1, a foundation-tier inbound, and zero churn — we are early on a curve that's now legibly going up and to the right.</p>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 10: AI / BUILD VELOCITY                           -->
+    <!-- SLIDE 10: BUILD VELOCITY                                -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide slide-dark" id="slide-10">
-      <div class="slide-header">
-        <div class="eyebrow">Build velocity</div>
-        <h2>AI changed the economics<br>of being <span class="grad-text">ready early.</span></h2>
+    <div class="slide" id="slide-10">
+      <div class="slide-head">
+        <span class="label">Build velocity ▲</span>
+        <h2>AI changed the economics<br>of being <em>ready early.</em></h2>
       </div>
 
-      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:36px;max-width:1140px;align-items:start;">
+      <div class="split-60-40" style="max-width:1280px;">
         <div>
-          <p style="font-size:1.05rem;color:rgba(255,255,255,0.8);margin-bottom:20px;">
+          <p class="lead" style="margin-bottom:24px;">
             Two to three years ago, the build cost behind a settlement + lending + issuance stack was a team of fifteen and eighteen months of runway. That math is no longer true for us.
           </p>
-          <ul class="check-list" style="margin-bottom:8px;">
-            <li style="color:rgba(255,255,255,0.85);">AI-assisted development compresses contract, adapter, and integration work by an order of magnitude.</li>
-            <li style="color:rgba(255,255,255,0.85);">We ship faster than the pipeline currently pulls — engineering is no longer the bottleneck.</li>
-            <li style="color:rgba(255,255,255,0.85);">When a Tier-1 counterparty says "build this for us," time-to-integration is measured in weeks, not quarters.</li>
-            <li style="color:rgba(255,255,255,0.85);">Two to three years of build budget collapsed into a fraction of headcount.</li>
+          <ul class="list">
+            <li>AI-assisted development compresses contract, adapter, and integration work by an order of magnitude.</li>
+            <li>We ship faster than the pipeline currently pulls — engineering is no longer the bottleneck.</li>
+            <li>When a Tier-1 counterparty says <em>"build this for us,"</em> time-to-integration is measured in weeks, not quarters.</li>
+            <li>Two to three years of build budget collapsed into a fraction of headcount.</li>
           </ul>
         </div>
 
         <div>
-          <div class="card" style="margin-bottom:12px;">
-            <span class="card-tag">Already shipped</span>
-            <h4 style="color:#fff;font-size:1rem;margin-bottom:6px;">Full settlement stack</h4>
+          <div class="panel accent-amber" style="margin-bottom:14px;">
+            <span class="tag">Already shipped</span>
+            <h4 style="margin-bottom:4px;">Full settlement stack</h4>
             <p style="font-size:0.9rem;">UnifiedAccountVault, MultiCollateralVault, batch settlement, insurance waterfall — all under test.</p>
           </div>
-          <div class="card" style="margin-bottom:12px;">
-            <span class="card-tag">Already shipped</span>
-            <h4 style="color:#fff;font-size:1rem;margin-bottom:6px;">8 exchange adapters</h4>
+          <div class="panel accent-amber" style="margin-bottom:14px;">
+            <span class="tag">Already shipped</span>
+            <h4 style="margin-bottom:4px;">Eight exchange adapters</h4>
             <p style="font-size:0.9rem;">Each adapter took days, not months. New venue onboarding is a templated workflow.</p>
           </div>
-          <div class="card">
-            <span class="card-tag">Implication</span>
-            <h4 style="color:#fff;font-size:1rem;margin-bottom:6px;">Capital efficiency</h4>
-            <p style="font-size:0.9rem;">The funding we have stretches further. We do not need to raise to ship; we raise to distribute.</p>
+          <div class="panel accent-cyan">
+            <span class="tag">Implication</span>
+            <h4 style="margin-bottom:4px;">Capital efficiency</h4>
+            <p style="font-size:0.9rem;">The funding we have stretches further. We don't need to raise to ship; we raise to distribute.</p>
           </div>
         </div>
       </div>
@@ -694,35 +847,35 @@
     <!-- ══════════════════════════════════════════════════════ -->
     <!-- SLIDE 11: WHAT WE'RE LOOKING FOR                        -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide" id="slide-11">
-      <div class="slide-header">
-        <div class="eyebrow">Asks · What we're looking for</div>
-        <h2>Where investor leverage moves the needle <span class="grad-text">most.</span></h2>
+    <div class="slide slide-tint" id="slide-11">
+      <div class="slide-head">
+        <span class="label">Asks · What we're looking for</span>
+        <h2>Where investor leverage <em>moves the needle most.</em></h2>
       </div>
 
-      <div class="grid-2" style="max-width:1140px;gap:18px;">
-        <div class="card cyan">
-          <span class="card-tag" style="color:#0891B2;">01 · Liquidity</span>
+      <div class="grid-cards-2" style="max-width:1280px;">
+        <div class="panel accent-cyan">
+          <span class="tag" style="color:var(--cyan);">01 · Liquidity</span>
           <h3 style="margin-bottom:8px;">Wholesale liquidity for lending</h3>
-          <p style="font-size:0.92rem;">Sourcing wholesale balance sheet for the lending product is occasionally tighter than we'd like. Introductions to liquidity providers, prime desks, or institutional credit lines unlock real volume on the deals already in pipeline.</p>
+          <p style="font-size:0.94rem;">Sourcing wholesale balance sheet for the lending product is occasionally tighter than we'd like. Introductions to liquidity providers, prime desks, or institutional credit lines unlock real volume on the deals already in pipeline.</p>
         </div>
 
-        <div class="card purple">
-          <span class="card-tag">02 · Market-making</span>
-          <h3 style="margin-bottom:8px;">MM for structured product issuance</h3>
-          <p style="font-size:0.92rem;">As the issuance book expands, every new structured product needs a market-maker on the secondary side. We are actively looking for MM partners who can support tokenized perp/yield/note products on-chain.</p>
+        <div class="panel accent-amber">
+          <span class="tag">02 · Market-making</span>
+          <h3 style="margin-bottom:8px;">MM for structured-product issuance</h3>
+          <p style="font-size:0.94rem;">As the issuance book expands, every new structured product needs a market-maker on the secondary side. We are actively looking for MM partners able to support tokenised perp/yield/note products on-chain.</p>
         </div>
 
-        <div class="card">
-          <span class="card-tag">03 · Throughput</span>
-          <h3 style="margin-bottom:8px;">More parallelization of work tracks</h3>
-          <p style="font-size:0.92rem;">Build velocity is high but serialized. With the right hires or partnerships, we can run more product tracks in parallel and pump out the structured-product menu faster than we currently are.</p>
+        <div class="panel accent-amber">
+          <span class="tag">03 · Throughput</span>
+          <h3 style="margin-bottom:8px;">More parallelisation of work tracks</h3>
+          <p style="font-size:0.94rem;">Build velocity is high but serialised. With the right hires or partnerships we can run more product tracks in parallel and pump out the structured-product menu faster than we currently are.</p>
         </div>
 
-        <div class="card" style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(14,165,233,0.06));border-color:rgba(124,58,237,0.2);">
-          <span class="card-tag">04 · New frontier</span>
-          <h3 style="margin-bottom:8px;">Prediction markets securitization</h3>
-          <p style="font-size:0.92rem;">An emerging product line we want to lean into: securitizing prediction-market exposure into regulated, tokenized instruments. Open to capital and counterparty intros that accelerate this build.</p>
+        <div class="panel accent-cyan">
+          <span class="tag" style="color:var(--cyan);">04 · New frontier</span>
+          <h3 style="margin-bottom:8px;">Prediction-markets securitisation</h3>
+          <p style="font-size:0.94rem;">An emerging product line we want to lean into: securitising prediction-market exposure into regulated, tokenised instruments. Open to capital and counterparty intros that accelerate this build.</p>
         </div>
       </div>
     </div>
@@ -730,71 +883,69 @@
     <!-- ══════════════════════════════════════════════════════ -->
     <!-- SLIDE 12: OUTLOOK / CLOSE                               -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div class="slide slide-tint" id="slide-12">
-      <div class="slide-header" style="text-align:center;">
-        <div class="eyebrow">Outlook</div>
-        <h2>What we're doing this quarter.</h2>
+    <div class="slide" id="slide-12">
+      <div class="slide-head">
+        <span class="label">Outlook · This quarter · 06.2026 → 09.2026</span>
+        <h2>What we're doing <em>this quarter.</em></h2>
       </div>
 
-      <div class="grid-3" style="max-width:1140px;margin:0 auto;">
-        <div class="card">
-          <span class="card-tag">01 — Close</span>
-          <h3 style="margin-bottom:8px;">Stellar Foundation</h3>
+      <div class="grid-cards-3" style="max-width:1320px;">
+        <div class="nodebox">
+          <span class="nidx">01 / CLOSE</span>
+          <h3>Stellar Foundation</h3>
           <p style="font-size:0.9rem;">Structure the engagement, lock the issuance scope, get the Bitpanda allocation flowing through Anduin rails.</p>
         </div>
-        <div class="card purple">
-          <span class="card-tag">02 — Convert</span>
-          <h3 style="margin-bottom:8px;">Bitvavo → LOI</h3>
+        <div class="nodebox">
+          <span class="nidx">02 / CONVERT</span>
+          <h3>Bitvavo → LOI</h3>
           <p style="font-size:0.9rem;">Move the hot lending conversation from verbal to signed — our most actionable lending opportunity right now.</p>
         </div>
-        <div class="card">
-          <span class="card-tag">03 — Activate</span>
-          <h3 style="margin-bottom:8px;">2–3 more Tier-1 issuance names</h3>
-          <p style="font-size:0.9rem;">Close MEXC. Move Bybit/Bitget/Bitpanda from "active" to "submitted." Compounding signing momentum.</p>
+        <div class="nodebox">
+          <span class="nidx">03 / ACTIVATE</span>
+          <h3>2–3 more Tier-1 issuance names</h3>
+          <p style="font-size:0.9rem;">Close MEXC. Move Bybit / Bitget / Bitpanda from "active" to "submitted." Compound signing momentum.</p>
         </div>
-        <div class="card">
-          <span class="card-tag">04 — Hire</span>
-          <h3 style="margin-bottom:8px;">Liquidity + MM partners</h3>
+        <div class="nodebox">
+          <span class="nidx">04 / HIRE</span>
+          <h3>Liquidity + MM partners</h3>
           <p style="font-size:0.9rem;">Land wholesale liquidity for lending and a structured-product market-maker, unblocking secondary trading.</p>
         </div>
-        <div class="card">
-          <span class="card-tag">05 — Stay warm</span>
-          <h3 style="margin-bottom:8px;">Revolut, post-IPO</h3>
+        <div class="nodebox">
+          <span class="nidx">05 / STAY WARM</span>
+          <h3>Revolut, post-IPO</h3>
           <p style="font-size:0.9rem;">No bandwidth pressure. Be the easy "yes" the day IPO prep clears.</p>
         </div>
-        <div class="card">
-          <span class="card-tag">06 — Extend</span>
-          <h3 style="margin-bottom:8px;">Prediction-market product line</h3>
-          <p style="font-size:0.9rem;">First sketch of the securitization architecture. Move from concept to scoped build.</p>
+        <div class="nodebox">
+          <span class="nidx">06 / EXTEND</span>
+          <h3>Prediction-market product line</h3>
+          <p style="font-size:0.9rem;">First sketch of the securitisation architecture. Move from concept to scoped build.</p>
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:36px;max-width:840px;margin-left:auto;margin-right:auto;">
-        <p style="font-size:1.02rem;">
-          We're playing a slower game than the deck said twelve months ago. We're also playing it from a position with <strong style="color:var(--text);">three signed issuance counterparties, a foundation-tier anchor, a hot lending replacement, and a build cost that AI has structurally lowered.</strong> That trade is one we'd take again.
-        </p>
-        <div style="margin-top:24px;font-size:0.76rem;color:var(--dim);font-family:'JetBrains Mono',monospace;">
-          Confidential · June 2026 · max@anduin.finance
-        </div>
+      <div class="closer" style="max-width:1320px;">
+        <p>We're playing a slower game than the deck said twelve months ago. We're also playing it from a position with <strong>three signed issuance counterparties, a foundation-tier anchor, a hot lending replacement, and a build cost that AI has structurally lowered.</strong> That trade is one we'd take again.</p>
+      </div>
+
+      <div style="margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--dim);letter-spacing:0.14em;text-transform:uppercase;">
+        — End of report · max@anduin.finance · Confidential 06.2026 —
       </div>
     </div>
 
   </div><!-- /slides -->
 
   <nav class="controls" id="navBar">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <span class="nav-brand">anduin<span>.</span></span>
-      <span class="slide-counter" id="counter">1 / 12</span>
-    </div>
-    <div class="dots" id="dots"></div>
+    <span class="nav-meta">
+      <span class="num" id="counter">01</span> / 12
+    </span>
+    <div class="progress" id="dots"></div>
     <div class="nav-btns">
-      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">← Prev</button>
-      <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)">Next →</button>
+      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">← PREV</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)">NEXT →</button>
     </div>
   </nav>
 </div>
 
-<div class="key-hint">← → to navigate · F for fullscreen</div>
+<div class="key-hint">[←/→] navigate · [F] fullscreen</div>
 
 <script>
   const slides = document.querySelectorAll('.slide');
@@ -804,10 +955,12 @@
   const dotsEl = document.getElementById('dots');
   slides.forEach((_, i) => {
     const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.className = 'pblock' + (i === 0 ? ' active' : '');
     d.onclick = () => goTo(i);
     dotsEl.appendChild(d);
   });
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
 
   function goTo(n) {
     slides[current].classList.remove('active');
@@ -815,22 +968,7 @@
     current = Math.max(0, Math.min(total - 1, n));
     slides[current].classList.add('active');
     dotsEl.children[current].classList.add('active');
-    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
-
-    const navBar = document.getElementById('navBar');
-    const isDark = slides[current].classList.contains('slide-dark');
-    navBar.style.background = isDark ? '#0D0820' : '#fff';
-    navBar.style.borderColor = isDark ? 'rgba(255,255,255,0.08)' : '#E5E7EB';
-    document.querySelectorAll('.nav-btn:not(.primary)').forEach(b => {
-      b.style.color = isDark ? 'rgba(255,255,255,0.7)' : '';
-      b.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '';
-      b.style.background = isDark ? 'transparent' : '';
-    });
-    document.querySelector('.nav-brand').style.color = isDark ? '#fff' : '';
-    document.getElementById('counter').style.color = isDark ? 'rgba(255,255,255,0.4)' : '';
-    dotsEl.querySelectorAll('.dot').forEach(d => {
-      d.style.background = d.classList.contains('active') ? '#7C3AED' : (isDark ? 'rgba(255,255,255,0.2)' : '#E5E7EB');
-    });
+    document.getElementById('counter').textContent = pad2(current + 1);
   }
 
   function navigate(dir) { goTo(current + dir); }
