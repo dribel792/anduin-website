@@ -448,27 +448,13 @@
           What the market is buying. What we're shipping. Where every named deal across lending and issuance actually stands — written down, without spin.
         </p>
 
-        <div class="stat-row" style="max-width:1080px;">
-          <div class="stat">
-            <span class="val"><span class="accent">04</span></span>
-            <span class="lbl">Secured</span>
-            <span class="delta up">vs 0 last quarter</span>
-          </div>
-          <div class="stat">
-            <span class="val">12<span class="accent">+</span></span>
-            <span class="lbl">Active</span>
-            <span class="delta up">widening</span>
-          </div>
-          <div class="stat">
-            <span class="val">01</span>
-            <span class="lbl">Strategic anchor</span>
-            <span class="delta up">Stellar · inbound</span>
-          </div>
-          <div class="stat">
-            <span class="val"><span class="accent">▲</span></span>
-            <span class="lbl">Build velocity</span>
-            <span class="delta up">AI-compounded</span>
-          </div>
+        <div style="margin-top:64px;max-width:520px;">
+          <hr class="rule amber" style="margin:0 0 18px;">
+          <span class="mono" style="font-size:0.74rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">
+            For: <span style="color:var(--ink);">Investor briefing</span>
+            &nbsp;·&nbsp;
+            From: <span style="color:var(--ink);">Max · Anduin</span>
+          </span>
         </div>
       </div>
     </div>
@@ -478,19 +464,19 @@
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide slide-tint" id="slide-2">
       <div class="slide-head">
-        <span class="label">Market state · 01 of 12</span>
+        <span class="label">Market state</span>
         <h2>Two demands. <em>One product family.</em></h2>
       </div>
 
       <div class="grid-2" style="max-width:1280px;">
         <div>
-          <span class="label">Demand 01 — away from</span>
-          <h3 style="margin-bottom:14px;">Spot and high-leverage perps are losing the marginal user.</h3>
-          <p>Retail and prosumer flows are migrating toward instruments with defined risk: capped downside, transparent payoff, regulated wrapper.</p>
+          <span class="label">Demand 01 — away from spot</span>
+          <h3 style="margin-bottom:14px;">Spot trading is losing the marginal user.</h3>
+          <p>Retail and prosumer flows want what plain spot can't deliver — either <em>more</em> leverage in a clean wrapper, or defined-risk exposure with a transparent payoff. Both routes lead into the same product family.</p>
           <hr class="rule amber">
           <span class="mono" style="font-size:0.74rem;color:var(--amber);letter-spacing:0.14em;text-transform:uppercase;">Anduin answers with</span>
-          <h4 style="margin-top:8px;margin-bottom:6px;">KO Certificates · Securitised Perpetuals</h4>
-          <p style="font-size:0.9rem;">Token-wrapped, capital-protected leverage. The perp economics, the certificate's regulatory clarity, on-chain rails.</p>
+          <h4 style="margin-top:8px;margin-bottom:6px;">Securitised Perpetuals · KO Certificates · Structured Leverage</h4>
+          <p style="font-size:0.9rem;">Securitised perps preserve the leverage and the perp economics, just inside a security wrapper. KO certs, turbos and mini futures give the same exposure with defined-risk knock-outs. Same chassis, different risk dial.</p>
         </div>
 
         <div>
@@ -510,7 +496,112 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <!-- SLIDE 3: PRODUCT EXCURSION 1 — LEVERAGE                 -->
+    <!-- SLIDE 3: BUSINESS MODEL — ONE VISUALISATION             -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="slide" id="slide-business-model">
+      <div class="slide-head">
+        <span class="label">Business model · one visualisation</span>
+        <h2>Issue. Distribute. <em>Hedge.</em></h2>
+        <p class="sub">One stack, three flows. Anduin mints the security token, a broker or exchange counterparty distributes it, and Anduin dynamically hedges the issued exposure on a crypto exchange.</p>
+      </div>
+
+      <!-- ── FLOW DIAGRAM ── -->
+      <div style="max-width:1320px;">
+
+        <!-- Row 1: 3-node horizontal flow -->
+        <div style="display:grid;grid-template-columns: 1fr 80px 1fr 80px 1fr;align-items:stretch;">
+
+          <!-- Node 1: Anduin -->
+          <div class="panel accent-amber">
+            <span class="tag">01 · Issuer</span>
+            <h3 style="font-family:'JetBrains Mono',monospace;font-size:1.3rem;letter-spacing:-0.01em;margin-bottom:8px;color:var(--amber);">ANDUIN</h3>
+            <p style="font-size:0.88rem;">Mints the security token in Liechtenstein (TVTG). Owns the issuer licence, the prospectus, the on-chain rails. Onboards the counterparty.</p>
+            <div class="meta" style="font-size:0.68rem;color:var(--amber);">
+              ISSUES → Sec perps · KO certs · Options
+            </div>
+          </div>
+
+          <!-- Arrow 1 -->
+          <div style="display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.18em;color:var(--muted);text-align:center;line-height:1.6;">
+              issues<br>token<br><span style="color:var(--amber);font-size:1.8rem;line-height:1;display:block;margin-top:4px;">→</span>
+            </div>
+          </div>
+
+          <!-- Node 2: Broker / Exchange -->
+          <div class="panel">
+            <span class="tag" style="color:var(--ink-soft);">02 · Distribution</span>
+            <h3 style="font-family:'JetBrains Mono',monospace;font-size:1.3rem;letter-spacing:-0.01em;margin-bottom:8px;color:var(--ink);">BROKER / EXCHANGE</h3>
+            <p style="font-size:0.88rem;">The counterparty — Bitvavo, MEXC, Nexo, Bit2me, Bitpanda — places the token in front of retail users through its regulated interface.</p>
+            <div class="meta" style="font-size:0.68rem;color:var(--muted);">
+              EARNS → Distribution margin · channel rev
+            </div>
+          </div>
+
+          <!-- Arrow 2 -->
+          <div style="display:flex;align-items:center;justify-content:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.18em;color:var(--muted);text-align:center;line-height:1.6;">
+              sells to<br>end user<br><span style="color:var(--amber);font-size:1.8rem;line-height:1;display:block;margin-top:4px;">→</span>
+            </div>
+          </div>
+
+          <!-- Node 3: End User -->
+          <div class="panel accent-cyan">
+            <span class="tag" style="color:var(--cyan);">03 · End user</span>
+            <h3 style="font-family:'JetBrains Mono',monospace;font-size:1.3rem;letter-spacing:-0.01em;margin-bottom:8px;color:var(--cyan);">RETAIL / PROSUMER</h3>
+            <p style="font-size:0.88rem;">Buys tokenised exposure through a familiar broker or exchange app. Sees a clean security; gets perp economics or defined-risk payoff.</p>
+            <div class="meta" style="font-size:0.68rem;color:var(--cyan);">
+              PAYS → Issuance + distribution spread
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Hedge branch -->
+        <div style="display:grid;grid-template-columns: 1fr 80px 1fr 80px 1fr;align-items:start;margin-top:18px;">
+
+          <!-- Down arrow under Anduin -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding-bottom:8px;">
+            <span style="color:var(--amber);font-size:1.8rem;line-height:1;">↓</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.18em;color:var(--muted);text-align:center;">delta-hedges</span>
+          </div>
+
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <!-- Row 3: Hedge box (under Anduin) + revenue summary spanning the rest -->
+        <div style="display:grid;grid-template-columns: 1fr 80px 3fr;align-items:stretch;">
+
+          <!-- Hedge box -->
+          <div class="panel accent-amber" style="background:rgba(245,158,11,0.07);">
+            <span class="tag">04 · Hedge counterparty</span>
+            <h3 style="font-family:'JetBrains Mono',monospace;font-size:1.3rem;letter-spacing:-0.01em;margin-bottom:8px;color:var(--amber);">CRYPTO CEX</h3>
+            <p style="font-size:0.88rem;">Anduin dynamically delta-hedges the issued exposure via perps and options on a crypto exchange. Eight venue adapters already live.</p>
+            <div class="meta" style="font-size:0.68rem;color:var(--amber);">
+              VENUES → Bybit · Binance · Deribit · OKX · ...
+            </div>
+          </div>
+
+          <div></div>
+
+          <!-- Revenue summary -->
+          <div style="padding-left:32px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--line);">
+            <span class="mono" style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;">↗ Anduin's revenue captures</span>
+            <ul class="list" style="margin-top:0;">
+              <li><strong>Issuance margin</strong> — minted into every token sold</li>
+              <li><strong>Servicing fees</strong> — recurring for the life of the position</li>
+              <li><strong>Hedge spread</strong> — captured between client price and CEX execution</li>
+            </ul>
+            <div class="mono" style="margin-top:14px;font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;">
+              Every new SKU (KO · BRC · PPN · Shark Fin · etc.) plugs into the same flow — no rebuild required.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SLIDE 4: PRODUCT EXCURSION 1 — LEVERAGE                 -->
     <!-- ══════════════════════════════════════════════════════ -->
     <div class="slide" id="slide-3">
       <div class="slide-head">
@@ -935,7 +1026,7 @@
 
   <nav class="controls" id="navBar">
     <span class="nav-meta">
-      <span class="num" id="counter">01</span> / 12
+      <span class="num" id="counter">01</span> / 13
     </span>
     <div class="progress" id="dots"></div>
     <div class="nav-btns">
