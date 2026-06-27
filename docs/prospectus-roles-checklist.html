@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Anduin — Prospectus Roles & Service-Provider Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D0820; --ink:#1B1633; --slate:#334155; --muted:#64748B;
+    --indigo:#6366F1; --purple:#7C3AED; --cyan:#0EA5E9; --green:#10B981; --amber:#D97706;
+    --lav:#F7F5FF; --line:rgba(124,58,237,0.16); --card:#FFFFFF; --bg:#FAFAFD;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-weight:400;line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:var(--navy);line-height:1.15}
+  .mono{font-family:'JetBrains Mono',monospace}
+  a{color:var(--indigo);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  header{background:linear-gradient(150deg,#0D0820 0%,#1A1140 55%,#231563 100%);color:#fff;padding:42px 0 38px}
+  header .wrap{display:block}
+  .brand{font-family:'Space Grotesk';font-weight:700;font-size:1.25rem;letter-spacing:-0.04em;color:#fff}
+  .brand .dot{color:var(--cyan)}
+  .kicker{font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#A5B4FC;margin:22px 0 10px}
+  header h1{color:#fff;font-size:2.05rem;margin:0 0 12px;max-width:760px}
+  header p{color:#C7C9E2;max-width:680px;margin:0;font-size:1.02rem}
+  .meta{margin-top:20px;font-family:'JetBrains Mono';font-size:.74rem;color:#8B8FB8;display:flex;gap:18px;flex-wrap:wrap}
+
+  main{padding:34px 0 60px}
+
+  .disclaimer{background:#FFF7ED;border:1px solid rgba(217,119,6,.3);border-left:4px solid var(--amber);border-radius:10px;padding:14px 18px;margin:0 0 28px;font-size:.93rem;color:#7C4A02}
+  .disclaimer strong{color:#92400E}
+
+  .rule{background:linear-gradient(135deg,#F5F3FF,#EEF2FF);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:0 0 34px}
+  .rule h2{font-size:1.18rem;margin:0 0 8px}
+  .rule .punch{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-top:14px;font-weight:500;color:var(--ink)}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin:0 0 24px;font-family:'JetBrains Mono'}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+
+  .card{background:var(--card);border:1px solid #E9E7F3;border-radius:14px;padding:20px 22px;margin:0 0 16px;box-shadow:0 1px 2px rgba(13,8,32,.03)}
+  .card-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+  .num{flex:none;width:34px;height:34px;border-radius:9px;background:var(--navy);color:#fff;font-family:'Space Grotesk';font-weight:600;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+  .card h3{font-size:1.12rem;margin:3px 0 0;flex:1}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 0}
+  .tag{font-family:'JetBrains Mono';font-size:.68rem;letter-spacing:.04em;padding:3px 9px;border-radius:999px;font-weight:500;white-space:nowrap}
+  .t-hard{background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA}
+  .t-opt{background:#F1F5F9;color:#475569;border:1px solid #E2E8F0}
+  .t-base{background:#EEF2FF;color:#4338CA;border:1px solid #C7D2FE}
+  .t-ft{background:#ECFEFF;color:#0E7490;border:1px solid #A5F3FC}
+  .t-ops{background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0}
+  .t-na{background:#F8FAFC;color:#94A3B8;border:1px dashed #CBD5E1}
+  dl{margin:6px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:5px 16px}
+  dt{font-family:'JetBrains Mono';font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+  dd{margin:0;color:var(--slate);font-size:.95rem}
+  dd strong{color:var(--ink);font-weight:600}
+
+  h2.sec{font-size:1.4rem;margin:42px 0 16px}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;background:#fff;border:1px solid #E9E7F3;border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid #EFEDF7;vertical-align:top}
+  th{background:var(--lav);font-family:'Space Grotesk';font-weight:600;color:var(--navy);font-size:.82rem}
+  tr:last-child td{border-bottom:none}
+  td.phase{font-family:'JetBrains Mono';font-size:.8rem;color:var(--purple);white-space:nowrap}
+
+  .summary{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:8px}
+  .sbox{border:1px solid #E9E7F3;border-radius:12px;padding:16px 18px;background:#fff}
+  .sbox h4{font-family:'Space Grotesk';margin:0 0 6px;font-size:.95rem;color:var(--navy)}
+  .sbox.green{border-left:4px solid var(--green)} .sbox.indigo{border-left:4px solid var(--indigo)}
+  .sbox.amber{border-left:4px solid var(--amber)} .sbox.slate{border-left:4px solid var(--muted)}
+  .sbox p{margin:0;font-size:.9rem;color:var(--slate)}
+
+  ol.counsel{padding-left:20px} ol.counsel li{margin:7px 0;color:var(--slate)}
+  .sources{font-size:.88rem;word-break:break-word}
+  .sources li{margin:6px 0}
+
+  footer{border-top:1px solid #E9E7F3;padding:26px 0 50px;color:var(--muted);font-size:.82rem}
+  footer .brand{color:var(--navy);font-size:1rem}
+  @media(max-width:640px){
+    header h1{font-size:1.6rem} dl{grid-template-columns:1fr;gap:2px}
+    dt{padding-top:8px} .summary{grid-template-columns:1fr}
+    table{display:block;overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="brand">anduin<span class="dot">.</span></span>
+    <div class="kicker">EU Base Prospectus · Final Terms · Internal Planning</div>
+    <h1>Prospectus Roles &amp; Service-Provider Checklist</h1>
+    <p>Every role for the Anduin tokenized-securities programme — hard vs. optional, where it lives (base prospectus vs. final terms), who can fill it, and when it must be ready. Benchmarked against the FMA-approved Ondo Global Markets and Backed / xStocks filings.</p>
+    <div class="meta"><span>Liechtenstein FMA route</span><span>v1 · 27 Jun 2026</span><span>Internal — not for indexing</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="disclaimer">
+    <strong>Working checklist — not legal advice.</strong> Prepared for internal planning. Every "hard requirement" and every ESMA Category A/B/C classification below must be confirmed by prospectus counsel before the base prospectus is locked. The most common reason a base prospectus is bounced is putting information in final terms that the base did not flag as optional.
+  </div>
+
+  <div class="rule">
+    <h2>The one rule that governs all of this</h2>
+    <p>Under the <strong>EU Prospectus Regulation (Reg. 2017/1129, Art. 8)</strong> and <strong>ESMA's guidelines on final terms</strong>, final terms can <strong>only</strong> fill in blanks the base prospectus <em>explicitly left open</em> (ESMA Category A / B / C fields). You <strong>cannot</strong> introduce a new party or role in final terms that the base prospectus did not contemplate.</p>
+    <div class="punch">➜ For every multi-party role: park the <em>optionality</em> in the base prospectus ("the Issuer may appoint one or more / additional [role]"), then name the actual party per Series in the final terms. That is what lets you name one now and add more later.</div>
+  </div>
+
+  <div class="legend">
+    <span class="tag t-hard">⬛ Hard requirement</span>
+    <span class="tag t-opt">⬜ Optional / structure-dependent</span>
+    <span class="tag t-base">B — Base prospectus</span>
+    <span class="tag t-ft">FT — Final terms</span>
+    <span class="tag t-ops">OPS — Operational only</span>
+  </div>
+
+  <!-- 1 -->
+  <div class="card">
+    <div class="card-top"><div class="num">1</div><h3>Issuer entity</h3>
+      <div class="tags"><span class="tag t-hard">Hard</span><span class="tag t-base">B</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>Newly-incorporated SPV issuer (Ondo uses a BVI Ltd; Backed uses a Jersey Ltd). Holding / option structure to Anduin Holdings sits separately.</dd>
+      <dt>Who</dt><dd>Anduin's own SPV — needs incorporation, directors, registered agent.</dd>
+      <dt>When</dt><dd><strong>Before</strong> base-prospectus drafting begins — it is the named party on the cover.</dd>
+    </dl>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <div class="card-top"><div class="num">2</div><h3>Dealer / Manager <span style="font-weight:400;color:var(--muted);font-size:.85rem">(MiFID-authorised)</span></h3>
+      <div class="tags"><span class="tag t-hard">Hard (≥1)</span><span class="tag t-base">B</span><span class="tag t-ft">FT</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>Name <strong>one</strong> MiFID firm you have the relationship with in the base via the Dealer Agreement; add more later by accession; the manager for each tranche goes in final terms.</dd>
+      <dt>Who</dt><dd>Any EU MiFID-authorised investment firm acting as dealer / distributor.</dd>
+      <dt>When</dt><dd>Lead Dealer signed into the Dealer Agreement <strong>before base approval</strong>; additional dealers anytime after.</dd>
+    </dl>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <div class="card-top"><div class="num">3</div><h3>Hedge counterparty</h3>
+      <div class="tags"><span class="tag t-opt">Not named</span><span class="tag t-ops">OPS</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd><strong>Do not name them.</strong> The base discloses hedging <em>risk</em> generically — "the Issuer may enter into back-to-back / hedging arrangements with one or more counterparties." The Bybit account just needs to exist operationally.</dd>
+      <dt>Who</dt><dd>Bybit (example) or any exchange / OTC desk where the hedge account is live.</dd>
+      <dt>When</dt><dd>Account open <strong>before first Series settles</strong>; no prospectus deadline.</dd>
+    </dl>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <div class="card-top"><div class="num">4</div><h3>Paying Agent</h3>
+      <div class="tags"><span class="tag t-opt">Structure-dependent</span><span class="tag t-base">B</span><span class="tag t-ft">FT</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>Same logic as the Dealer — anchor in the base, allow more via final terms <em>if</em> you even need a classic one. <strong>Ondo names no separate paying agent</strong> — on-chain settlement + the Administrator/Registrar absorb the function. For sui-generis tokens you can likely collapse this into role 5.</dd>
+      <dt>Who</dt><dd>A paying-agent bank, <strong>or</strong> fold into the Registrar / Administrator.</dd>
+      <dt>When</dt><dd>Decide structure <strong>before base drafting</strong>; name in FT per Series if used.</dd>
+    </dl>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+    <div class="card-top"><div class="num">5</div><h3>Registrar / Administrator</h3>
+      <div class="tags"><span class="tag t-hard">Hard</span><span class="tag t-base">B</span><span class="tag t-ft">FT</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>This is the role you actually need (not "transfer agent") — Ondo's equivalent of the transfer-agent function. <strong>Ondo names The Bank of New York Mellon as Administrator &amp; Registrar.</strong></dd>
+      <dt>Who</dt><dd>An institutional administrator / registrar (BNY Mellon-class), or the issuer's appointed registrar.</dd>
+      <dt>When</dt><dd>Engaged <strong>before base approval</strong>.</dd>
+    </dl>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <div class="card-top"><div class="num">6</div><h3>Transfer Agent</h3>
+      <div class="tags"><span class="tag t-na">Not needed</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd><strong>Not required.</strong> These are sui-generis tokens, not under the DLT Pilot Regime — the <strong>on-chain register is the transfer layer.</strong> Neither Ondo nor Backed names a classic transfer agent; the Registrar (5) covers the register.</dd>
+      <dt>Who</dt><dd>N/A — covered by Registrar / Administrator.</dd>
+      <dt>When</dt><dd>N/A.</dd>
+    </dl>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <div class="card-top"><div class="num">7</div><h3>Custodian(s)</h3>
+      <div class="tags"><span class="tag t-hard">Hard</span><span class="tag t-base">B</span><span class="tag t-ft">FT</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>Underlying held in custody (Backed: Swiss prime broker / custodian bank). <strong>Ondo's final terms name Alpaca Securities LLC and BitGo Trust Company, Inc.</strong></dd>
+      <dt>Who</dt><dd>A regulated broker-dealer (securities) and/or qualified custodian (Alpaca / BitGo-class).</dd>
+      <dt>When</dt><dd>Custody agreements in place <strong>before first Series settles</strong>; named per Series in FT.</dd>
+    </dl>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+    <div class="card-top"><div class="num">8</div><h3>Security Trustee / Security Agent</h3>
+      <div class="tags"><span class="tag t-opt">Conditional — hard if secured</span><span class="tag t-base">B (framework)</span><span class="tag t-ft">FT (identity)</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>Can live in final terms <em>provided</em> the base sets up the framework (that security may exist, mechanism, ranking / subordination). <strong>Ondo's base creates a "Security Agent" role; the collateral description sits in final terms per product</strong> — exactly the use-case-to-use-case flexibility you want.</dd>
+      <dt>Who</dt><dd>A corporate security trustee / security-agent firm.</dd>
+      <dt>When</dt><dd>Framework in base <strong>before approval</strong>; specific agent + collateral per Series in FT.</dd>
+    </dl>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+    <div class="card-top"><div class="num">9</div><h3>Calculation Agent</h3>
+      <div class="tags"><span class="tag t-opt">Structure-dependent</span><span class="tag t-base">B</span><span class="tag t-ft">FT</span></div></div>
+    <dl>
+      <dt>Decided</dt><dd>Standard for delta-one / tracker payoffs; can be the Issuer or an appointed agent. Flag to counsel whether self-appointment is acceptable.</dd>
+      <dt>Who</dt><dd>Issuer itself or an appointed calculation agent.</dd>
+      <dt>When</dt><dd>Confirmed <strong>before base approval</strong>.</dd>
+    </dl>
+  </div>
+
+  <h2 class="sec">Timeline (sequencing)</h2>
+  <table>
+    <thead><tr><th>Phase</th><th>What must be ready</th><th>Roles locked</th></tr></thead>
+    <tbody>
+      <tr><td class="phase">0 · Pre-structuring</td><td>Issuer SPV incorporated; structure decisions (secured vs. unsecured, calc-agent self-appointment, paying-agent collapse)</td><td>#1</td></tr>
+      <tr><td class="phase">1 · Base drafting</td><td>Lead Dealer signed; Registrar / Admin engaged; security framework drafted; all <em>optionality</em> language inserted</td><td>#2, #5, #8 (framework), #9</td></tr>
+      <tr><td class="phase">2 · FMA approval</td><td>Base prospectus filed with Liechtenstein FMA, approved, notified to target EEA states</td><td>approval gate</td></tr>
+      <tr><td class="phase">3 · Per-Series (FT)</td><td>Name actual Manager, custodians, security agent + collateral, paying agent if used</td><td>#2, #3 (ops), #4, #7, #8 (identity)</td></tr>
+      <tr><td class="phase">4 · Ongoing / ops</td><td>Hedge account live; custody live; additional dealers accede as needed</td><td>#3, #7, #2 (additions)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sec">Hard-requirement summary</h2>
+  <div class="summary">
+    <div class="sbox green"><h4>Must exist before base approval</h4><p>Issuer (#1), ≥1 Dealer / Manager (#2), Registrar / Administrator (#5), and — if secured — the Security framework (#8).</p></div>
+    <div class="sbox indigo"><h4>Per-Series in final terms</h4><p>Manager, Custodian(s), Security Agent + collateral, Paying Agent (if used).</p></div>
+    <div class="sbox slate"><h4>Operational only — never in the prospectus</h4><p>Hedge counterparty (#3).</p></div>
+    <div class="sbox amber"><h4>Not needed at all</h4><p>Transfer Agent (#6).</p></div>
+  </div>
+
+  <h2 class="sec">Open items for counsel</h2>
+  <ol class="counsel">
+    <li>Confirm the ESMA Category (A/B/C) for each FT-populated field above — this is the rejection risk.</li>
+    <li>Confirm the paying-agent function can be collapsed into the Registrar / Administrator for a sui-generis token.</li>
+    <li>Confirm calculation-agent self-appointment by the Issuer is acceptable.</li>
+    <li>Pull Ondo's and Backed's actual FMA-approved base prospectuses side-by-side as drafting templates.</li>
+  </ol>
+
+  <h2 class="sec">Comparable sources</h2>
+  <ul class="sources">
+    <li><a href="https://www.mfsa.mt/wp-content/uploads/2026/01/Ondo-Global-Markets-BVI-Limited-Final-Terms-Document-dated-11-November-2025.pdf">Ondo GM final terms (QQQon) — MFSA filing</a></li>
+    <li><a href="https://docs.ondo.finance/ondo-global-markets/important-notes">Ondo Global Markets — base-prospectus notes (FMA-approved 11 Nov 2025)</a></li>
+    <li><a href="https://assets.backed.fi/legal-documentation">Backed / xStocks — legal documentation portal</a></li>
+  </ul>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand">anduin<span style="color:var(--cyan)">.</span></span>
+    &nbsp;&nbsp;Internal planning document · not legal advice · confirm all classifications with prospectus counsel.
+  </div>
+</footer>
+</body>
+</html>
