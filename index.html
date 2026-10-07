@@ -230,54 +230,6 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 760px) {
   .footer { flex-wrap: wrap; row-gap: 8px; }
-  .ticker { order: -1; flex: 1 1 100%; justify-content: center; }
-}
-
-/* ------------------------------ ticker ------------------------------ */
-
-.ticker {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(243, 246, 251, 0.14);
-  background: rgba(6, 10, 19, 0.44);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 11.5px;
-  color: rgba(233, 239, 248, 0.85);
-  white-space: nowrap;
-}
-.tick-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #43d69e;
-  animation: pulse 2.4s ease-out infinite;
-}
-@keyframes pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(67, 214, 158, 0.45); }
-  70%  { box-shadow: 0 0 0 7px rgba(67, 214, 158, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(67, 214, 158, 0); }
-}
-.tick-tag {
-  font-family: "Inter", Inter, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #8fe3c0;
-}
-.tick-item { display: inline-flex; align-items: baseline; gap: 6px; }
-.tick-sym { color: rgba(233, 239, 248, 0.55); font-size: 10.5px; }
-.tick-chg.up { color: #3ecfa4; }
-.tick-chg.down { color: #ef8080; }
-
-@media (max-width: 420px) {
-  .ticker { gap: 9px; padding: 6px 11px; }
-  .tick-chg { display: none; }
 }
 
 /* ------------------------------ dialogs ----------------------------- */
@@ -521,7 +473,7 @@ dialog.dlg[open] { animation: dlg-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
 /* --------------------------- reduced motion -------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .backdrop, .watermark, .tagline, .cookie, .tick-dot { animation: none !important; }
+  .backdrop, .watermark, .tagline, .cookie { animation: none !important; }
   dialog.dlg[open] { animation: none; }
 }
 </style>
@@ -566,13 +518,6 @@ dialog.dlg[open] { animation: dlg-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
   <footer class="footer">
     <p class="foot-copy">© 2026 Anduin Issuance (JE) Limited</p>
-    <div class="ticker" role="status" aria-label="Reference spot prices from Kraken — not an Anduin quote" hidden>
-      <span class="tick-dot" aria-hidden="true"></span>
-      <span class="tick-tag">Spot</span>
-      <span class="tick-item"><span class="tick-sym">BTC</span><span class="tick-px tnum" id="tick-btc">—</span><span class="tick-chg up tnum" id="chg-btc"></span></span>
-      <span class="tick-item"><span class="tick-sym">ETH</span><span class="tick-px tnum" id="tick-eth">—</span><span class="tick-chg up tnum" id="chg-eth"></span></span>
-      <span class="tick-item"><span class="tick-sym">SOL</span><span class="tick-px tnum" id="tick-sol">—</span><span class="tick-chg up tnum" id="chg-sol"></span></span>
-    </div>
     <nav class="foot-links" aria-label="Site">
       <button type="button" class="foot-link" data-dlg-open="series">Series</button>
       <span class="foot-sep" aria-hidden="true">·</span>
@@ -677,97 +622,6 @@ dialog.dlg[open] { animation: dlg-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
 <script>
 (function () {
   "use strict";
-
-  /* ------------------------------ ticker ------------------------------ */
-  /* Live spot reference prices. Primary source Kraken public ticker (one
-     request covers all three, and carries the 24h open so the change can be
-     derived); Coinbase spot is the fallback. If neither answers we hide the
-     box rather than display a number we cannot stand behind. */
-
-  var PAIRS = { XXBTZUSD: "BTC", XETHZUSD: "ETH", SOLUSD: "SOL" };
-  var KRAKEN = "https://api.kraken.com/0/public/Ticker?pair=XBTUSD,ETHUSD,SOLUSD";
-  var COINBASE = "https://api.coinbase.com/v2/prices/";
-
-  var box = document.querySelector(".ticker");
-  var everLoaded = false;
-
-  function fmt(p) {
-    return p >= 1
-      ? p.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-      : p.toLocaleString("en-US", { minimumFractionDigits: 4, maximumFractionDigits: 4 });
-  }
-
-  function setTxt(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
-
-  function paint(sym, price, change) {
-    var low = sym.toLowerCase();
-    setTxt("tick-" + low, fmt(price));
-    var chg = document.getElementById("chg-" + low);
-    if (!chg) return;
-    if (change === null || !isFinite(change)) {
-      chg.textContent = "";
-      return;
-    }
-    var up = change >= 0;
-    chg.className = "tick-chg " + (up ? "up" : "down") + " tnum";
-    chg.textContent = (up ? "+" : "\u2212") + Math.abs(change).toFixed(2) + "%";
-  }
-
-  function reveal() {
-    everLoaded = true;
-    if (box) box.hidden = false;
-  }
-
-  function fromKraken() {
-    return fetch(KRAKEN, { cache: "no-store" })
-      .then(function (r) { if (!r.ok) throw new Error("kraken " + r.status); return r.json(); })
-      .then(function (body) {
-        if (!body || !body.result || (body.error && body.error.length)) throw new Error("kraken payload");
-        var hit = 0;
-        Object.keys(PAIRS).forEach(function (key) {
-          var row = body.result[key];
-          if (!row) return;
-          var last = parseFloat(row.c[0]);
-          var open = parseFloat(row.o);
-          if (!isFinite(last)) return;
-          var change = isFinite(open) && open > 0 ? ((last - open) / open) * 100 : null;
-          paint(PAIRS[key], last, change);
-          hit++;
-        });
-        if (!hit) throw new Error("kraken empty");
-        reveal();
-      });
-  }
-
-  function fromCoinbase() {
-    var syms = ["BTC", "ETH", "SOL"];
-    return Promise.all(syms.map(function (sym) {
-      return fetch(COINBASE + sym + "-USD/spot", { cache: "no-store" })
-        .then(function (r) { if (!r.ok) throw new Error("cb " + r.status); return r.json(); })
-        .then(function (body) {
-          var px = parseFloat(body && body.data && body.data.amount);
-          if (!isFinite(px)) throw new Error("cb payload");
-          return { sym: sym, px: px };
-        });
-    })).then(function (rows) {
-      rows.forEach(function (row) { paint(row.sym, row.px, null); });
-      reveal();
-    });
-  }
-
-  function refresh() {
-    fromKraken()
-      .catch(fromCoinbase)
-      .catch(function () {
-        /* Both sources down. Never fall back to invented numbers: if we have
-           shown a price before, leave the last good one in place; if we never
-           got one, the box stays hidden. */
-        if (!everLoaded && box) box.hidden = true;
-      });
-  }
-
-  refresh();
-  setInterval(refresh, 20000);
 
   /* ------------------------------ dialogs ----------------------------- */
 
