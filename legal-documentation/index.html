@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Documentation — Issuer | Anduin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;--bg-tint:#F7F5FF;--bg-deep:#EDE9FE;
+  --purple:#5B21B6;--violet:#7C3AED;
+  --text:#17141F;--text-muted:#5B5670;--text-dim:#8E89A3;
+  --border:#E7E3F4;--border-strong:#D6D0EC;
+  --mono:'JetBrains Mono',monospace;--display:'Space Grotesk',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);
+line-height:1.65;font-size:15px;-webkit-font-smoothing:antialiased;}
+.draft-banner{background:var(--bg-deep);border-bottom:1px solid var(--border-strong);
+padding:8px 16px;text-align:center;font-family:var(--mono);font-size:.72rem;color:var(--purple);
+letter-spacing:.04em;}
+.navbar{border-bottom:1px solid var(--border);background:rgba(255,255,255,.92);
+position:sticky;top:0;backdrop-filter:blur(8px);z-index:10;}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;}
+.container{max-width:980px;margin:0 auto;padding:0 28px;}
+.logo-text{font-family:var(--display);font-weight:700;font-size:1.3rem;color:var(--text);
+text-decoration:none;letter-spacing:-.02em;}
+.logo-dot{color:var(--violet);}
+.nav-right a{font-size:.88rem;color:var(--text-muted);text-decoration:none;margin-left:24px;}
+.nav-right a:hover{color:var(--violet);}
+header.page{padding:56px 0 8px;}
+.section-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;
+text-transform:uppercase;color:var(--violet);}
+h1{font-family:var(--display);font-size:2.3rem;font-weight:700;letter-spacing:-.02em;
+margin:10px 0 6px;}
+.subtitle{color:var(--text-muted);max-width:640px;}
+.tabs{display:flex;gap:4px;margin:32px 0 0;border-bottom:1px solid var(--border);}
+.tabs a{padding:10px 18px;font-size:.9rem;text-decoration:none;color:var(--text-muted);
+border-bottom:2px solid transparent;font-weight:500;}
+.tabs a.active{color:var(--purple);border-bottom-color:var(--violet);}
+.tabs a.disabled{color:var(--text-dim);cursor:default;}
+.tabs a.disabled span{font-size:.68rem;font-family:var(--mono);margin-left:6px;color:var(--text-dim);}
+main{padding:40px 0 96px;}
+h2{font-family:var(--display);font-size:1.35rem;font-weight:600;margin:44px 0 18px;
+letter-spacing:-.01em;}
+.issuer-card{background:var(--bg-tint);border:1px solid var(--border);border-radius:14px;
+padding:10px 28px;}
+.issuer-row{display:grid;grid-template-columns:220px 1fr;gap:16px;padding:13px 0;
+border-bottom:1px solid var(--border);}
+.issuer-row:last-child{border-bottom:none;}
+.issuer-row dt{color:var(--text-muted);font-size:.86rem;font-weight:500;padding-top:1px;}
+.issuer-row dd{font-size:.92rem;}
+.issuer-row dd .mono{font-family:var(--mono);font-size:.84rem;}
+.placeholder{color:var(--text-dim);font-style:italic;}
+.placeholder::after{content:" — TBD";font-family:var(--mono);font-size:.7rem;font-style:normal;
+color:var(--violet);}
+.doc-card{display:flex;align-items:center;gap:18px;border:1px solid var(--border);
+border-radius:12px;padding:18px 22px;margin:14px 0;text-decoration:none;color:var(--text);
+transition:border-color .15s, background .15s;}
+.doc-card:hover{border-color:var(--violet);background:var(--bg-tint);}
+.doc-icon{flex:0 0 auto;width:42px;height:42px;border-radius:10px;background:var(--bg-deep);
+display:flex;align-items:center;justify-content:center;color:var(--purple);}
+.doc-icon svg{width:20px;height:20px;}
+.doc-body{flex:1;}
+.doc-title{font-weight:600;font-size:.95rem;}
+.doc-meta{font-family:var(--mono);font-size:.74rem;color:var(--text-muted);margin-top:2px;}
+.doc-dl{font-family:var(--mono);font-size:.74rem;color:var(--violet);white-space:nowrap;}
+.notice{border:1px solid var(--border);border-left:3px solid var(--violet);background:var(--bg-tint);
+border-radius:0 10px 10px 0;padding:16px 22px;margin:18px 0;font-size:.84rem;color:var(--text-muted);}
+.notice strong{color:var(--text);}
+footer{border-top:1px solid var(--border);padding:28px 0 48px;color:var(--text-dim);
+font-size:.8rem;}
+footer .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:640px){.issuer-row{grid-template-columns:1fr;gap:2px;}h1{font-size:1.8rem;}}
+</style>
+</head>
+<body>
+
+<div class="draft-banner">PREVIEW · pending final legal review · not yet linked from the main site</div>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="logo-text">anduin<span class="logo-dot">.</span></a>
+    <div class="nav-right">
+      <a href="/">Home</a>
+      <a href="mailto:max@anduin.finance">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="container">
+    <span class="section-label">Legal Documentation</span>
+    <h1>Issuer</h1>
+    <p class="subtitle">Corporate information and statutory documents of the issuing entity. All documents are provided for information purposes and should be read together with the relevant product documentation.</p>
+    <div class="tabs">
+      <a class="active" href="#">Issuer</a>
+      <a class="disabled" href="#">Products<span>SOON</span></a>
+      <a class="disabled" href="#">Final Terms &amp; KIDs<span>SOON</span></a>
+      <a class="disabled" href="#">Service Providers<span>SOON</span></a>
+      <a class="disabled" href="#">Notices to Investors<span>SOON</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <h2>Issuer information</h2>
+    <dl class="issuer-card">
+      <div class="issuer-row"><dt>Name</dt><dd>Anduin Issuance (JE) Limited</dd></div>
+      <div class="issuer-row"><dt>Registered in</dt><dd>Jersey, Channel Islands</dd></div>
+      <div class="issuer-row"><dt>Registered office</dt><dd>15 Esplanade, St Helier, Jersey, JE1 1RB</dd></div>
+      <div class="issuer-row"><dt>Register number</dt><dd><span class="mono">167251</span></dd></div>
+      <div class="issuer-row"><dt>Legal form</dt><dd>Private company limited by shares, incorporated under the Companies (Jersey) Law 1991</dd></div>
+      <div class="issuer-row"><dt>Date of incorporation</dt><dd>4 September 2026</dd></div>
+      <div class="issuer-row"><dt>Shareholder</dt><dd>100% Anduin Holdings, Cayman Islands</dd></div>
+      <div class="issuer-row"><dt>Directors</dt><dd>Hawksford Directors 1 Limited · Hawksford Directors 2 Limited</dd></div>
+      <div class="issuer-row"><dt>Independent auditor</dt><dd>Grant Thornton Limited</dd></div>
+      <div class="issuer-row"><dt>Accounting framework</dt><dd>IFRS as adopted by the European Union (EU IFRS)</dd></div>
+      <div class="issuer-row"><dt>Regulatory status</dt><dd><span class="placeholder">Jersey consents (COBO / relevant JFSC consents)</span></dd></div>
+      <div class="issuer-row"><dt>Issuer LEI</dt><dd><span class="placeholder">to be issued</span></dd></div>
+      <div class="issuer-row"><dt>Contact</dt><dd><a href="mailto:max@anduin.finance">max@anduin.finance</a></dd></div>
+    </dl>
+
+    <h2>Financial statements &amp; corporate documents</h2>
+
+    <a class="doc-card" href="documents/anduin-issuance-je-financial-statements-2026-09-30.pdf" download>
+      <span class="doc-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </span>
+      <span class="doc-body">
+        <span class="doc-title">Audited Financial Statements — Anduin Issuance (JE) Limited</span>
+        <span class="doc-meta">Period from incorporation to 30 September 2026 · EU IFRS · Auditor: Grant Thornton Limited · signed 23 October 2026</span>
+      </span>
+      <span class="doc-dl">PDF ↓</span>
+    </a>
+
+    <p class="subtitle" style="font-size:.84rem;color:var(--text-dim);">Further documents (Articles of Association, Base Prospectus, Final Terms per series, PRIIPs KIDs) will be added here as they become available.</p>
+
+    <h2>Important notice</h2>
+    <div class="notice">
+      <p><strong>Draft placeholder — subject to legal review before publication.</strong> The securities referred to on this page have not been and will not be registered under the U.S. Securities Act of 1933 and may not be offered or sold within the United States or to U.S. persons. The information on this page does not constitute an offer, solicitation or investment advice. Products are intended exclusively for investors who meet the applicable eligibility criteria in their jurisdiction. Access to product documentation may be subject to confirmation of investor status and acceptance of the terms of use and privacy notice.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Anduin Issuance (JE) Limited</span>
+    <span>Legal Documentation · Terms of Service · Privacy Notice</span>
+  </div>
+</footer>
+
+</body>
+</html>
